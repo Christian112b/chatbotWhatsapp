@@ -15,6 +15,8 @@ def whatsapp_webhook():
     resp = MessagingResponse()
     msg = resp.message()
 
+    print(f"Mensaje recibido de {sender}: {incoming_msg}")
+
     if incoming_msg.lower() == 'hola':
         msg.body("¡Hola! ¿Cómo puedo ayudarte hoy?")
     elif incoming_msg.lower() == 'adiós':
