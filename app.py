@@ -34,15 +34,15 @@ def whatsapp_webhook():
         msg.body(mensaje)
         usuarios_estado[user_id] = nuevo_estado
 
-    elif estado == "menu_clase":
-        mensaje, nuevo_estado = (None, "Inicio")  # Aquí deberías definir la lógica para el menú de clases
-        msg.body(mensaje)
-        usuarios_estado[user_id] = nuevo_estado
+    # elif estado == "menu_clase":
+    #     mensaje, nuevo_estado = (None, "Inicio")  # Aquí deberías definir la lógica para el menú de clases
+    #     msg.body(mensaje)
+    #     usuarios_estado[user_id] = nuevo_estado
 
-    elif estado == "menu_inscripcion":
-        mensaje, nuevo_estado = (None, "Inicio")  # Aquí deberías definir la lógica para el menú de clases
-        msg.body(mensaje)
-        usuarios_estado[user_id] = nuevo_estado
+    # elif estado == "menu_inscripcion":
+    #     mensaje, nuevo_estado = (None, "Inicio")  # Aquí deberías definir la lógica para el menú de clases
+    #     msg.body(mensaje)
+    #     usuarios_estado[user_id] = nuevo_estado
     
     else:
         msg.body("Reiniciando Estado")
