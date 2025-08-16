@@ -23,5 +23,3 @@ def respuesta_menu_precio(mensaje):
         return respuestas["respuesta_inscripcion"], 200
     else:
         return "Lo siento, no entiendo tu solicitud, intentalo de nuevo.", 400
-
-    return None

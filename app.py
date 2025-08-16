@@ -29,7 +29,7 @@ def whatsapp_webhook():
         usuarios_estado[user_id] = "esperando_en_menu"
 
     elif estado == "esperando_en_menu":
-        response = clasificacion_mensaje(incoming_msg) 
+        response = respuesta_menu_precio(incoming_msg) 
         msg.body(response[0])
         if response[1] == "precios":
             usuarios_estado[user_id] = "menu_precios"
