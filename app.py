@@ -21,17 +21,17 @@ def whatsapp_webhook():
     msg = resp.message()
 
     if estado == "Inicio":
-        msg.body(menu_bienvenida)
+        msg.body(menu_bienvenida + "Estado: " + estado)
         usuarios_estado[user_id] = "esperando_en_menu"
 
     elif estado == "esperando_en_menu":
         mensaje, nuevo_estado = respuesta_menu_precio(incoming_msg) 
-        msg.body(mensaje)
+        msg.body(mensaje + "Estado: " + estado)
         usuarios_estado[user_id] = nuevo_estado
         
     elif estado == "menu_precios":
         mensaje, nuevo_estado = respuesta_confirmacion(incoming_msg)
-        msg.body(mensaje)
+        msg.body(mensaje + "Estado: " + estado)
         usuarios_estado[user_id] = nuevo_estado
 
     # elif estado == "menu_clase":
@@ -45,10 +45,10 @@ def whatsapp_webhook():
     #     usuarios_estado[user_id] = nuevo_estado
     
     else:
-        msg.body("Reiniciando Estado")
+        msg.body("Reiniciando Estado" + "Estado: " + estado)
         usuarios_estado[user_id] = "Inicio"
         msg2 = resp.message()
-        msg2.body(menu_bienvenida)
+        msg2.body(menu_bienvenida + "Estado: " + usuarios_estado[user_id])
 
     return Response(str(resp), mimetype="application/xml", status=200)
 
