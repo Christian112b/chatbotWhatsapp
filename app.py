@@ -46,6 +46,10 @@ def whatsapp_webhook():
     else:
         msg.body("Reiniciando Estado")
         usuarios_estado[user_id] = "Inicio"
+        msg2 = resp.message()
+        msg2.body(
+            "¿Te interesa conocer precios, clases o inscribirte?"
+        )
 
     return Response(str(resp), mimetype="application/xml", status=200)
 

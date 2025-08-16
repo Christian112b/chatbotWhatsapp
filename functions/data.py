@@ -72,12 +72,3 @@ respuestas = {
     "desconocido": "Lo siento, no entendí tu mensaje. ¿Podrías reformularlo?",
     "respuesta_precios": "Aquí tienes la información sobre precios..."
 }   
-
-faq_dict = {
-    "horario": "Nuestro horario es de lunes a viernes de 6:00 a.m. a 10:00 p.m., y sábados de 8:00 a.m. a 4:00 p.m.",
-    "precio": "La mensualidad general es de $500 MXN. También contamos con paquetes personalizados.",
-    "clases": "Ofrecemos funcional, spinning, yoga, box y entrenamiento personalizado.",
-    "ubicación": "Estamos en Av. Reforma #123, San Luis Potosí.",
-    "inscripción": "Solo necesitas una identificación y llenar un formulario. También puedes iniciar por WhatsApp.",
-    "higiene": "Sí, seguimos protocolos de limpieza y desinfección constantes."
-}
