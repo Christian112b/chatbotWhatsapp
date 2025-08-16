@@ -7,6 +7,8 @@ import os
 load_dotenv()
 app = Flask(__name__)
 
+
+
 @app.route("/whatsapp", methods=['POST'])
 def whatsapp_webhook():
     incoming_msg = request.values.get('Body', '').strip()
@@ -15,16 +17,11 @@ def whatsapp_webhook():
     resp = MessagingResponse()
     msg = resp.message()
 
-    print(f"Mensaje recibido de {sender}: {incoming_msg}")
+    msg.body(clasificar_mensaje(incoming_msg))
 
-    if incoming_msg.lower() == 'hola':
-        msg.body("¡Hola! ¿Cómo puedo ayudarte hoy?")
-    elif incoming_msg.lower() == 'adiós':
-        msg.body("¡Adiós! Que tengas un buen día.")
-    else:
-        msg.body("Lo siento, no entendí tu mensaje. Por favor, escribe 'hola' o 'adiós'.")
-
-    return str(resp)
+    return Response(str(resp), mimetype="application/xml", status=200)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+    
