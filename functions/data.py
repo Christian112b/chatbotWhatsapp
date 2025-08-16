@@ -30,7 +30,8 @@ no_acepto_keywords = [
 
 menu_precios_opcion_clase = [
     "agendar", "clase prueba", "clase", "reservar", "probar clase", 
-    "quiero clase", "quiero agendar", "quiero reservar", "inscribirme", "inscripción"
+    "quiero clase", "quiero agendar", "quiero reservar", "inscribirme", 
+    "inscripción", "clase de prueba"
 ]
 
 menu_precios_informacion = [
