@@ -1,26 +1,17 @@
 from .data import *
 
-def clasificacion_mensaje(mensaje):
-    mensaje = mensaje.lower()
-    if any(saludo in mensaje for saludo in saludos):
-        return respuestas["saludo"]
-    elif any(despedida in mensaje for despedida in despedidas):
-        return respuestas["despedida"]
-    elif any(agradecimiento in mensaje for agradecimiento in agradecimientos):
-        return respuestas["agradecimiento"]
-
-    else:
-        return respuestas["desconocido"]
-
 def respuesta_menu_precio(mensaje):
     mensaje = mensaje.lower()
 
     if any(precio in mensaje for precio in precio_keywords):
-        return menu_precios, "precios"
-    elif any(clase in mensaje for clase in ["clases", "inscripción"]):
-        return respuestas["respuesta_clases_inscripcion"], 200
-    elif any(inscripcion in mensaje for inscripcion in ["inscripción", "inscribirme"]):
-        return respuestas["respuesta_inscripcion"], 200
+        return menu_precios, "menu_precios"
+    
+    elif any(clase in mensaje for clase in clase_keywords):
+        return respuestas["respuesta_clases_inscripcion"], "menu_clase"
+
+    elif any(insc in mensaje for insc in inscripcion_keywords):
+        return respuestas["respuesta_clases_inscripcion"], "menu_inscripcion"
+
     else:
         return "Lo siento, no entiendo tu solicitud, intentalo de nuevo.", 400
 

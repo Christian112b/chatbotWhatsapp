@@ -2,15 +2,14 @@ from dotenv import load_dotenv
 from flask import Flask, request, Response
 from twilio.twiml.messaging_response import MessagingResponse
 
+from functions.data import *
 from functions.validations import *
 
 load_dotenv()
 app = Flask(__name__)
 
 # Diccionario para almacenar el estado de cada usuario
-
 usuarios_estado = {}
-
 
 @app.route("/whatsapp", methods=['POST'])
 def whatsapp_webhook():
@@ -22,34 +21,34 @@ def whatsapp_webhook():
     msg = resp.message()
 
     if estado == "Inicio":
-        msg.body(
-            "Hola, bienvenido al Club Deportivo.\n"
-            "¿Te interesa conocer precios, clases o inscribirte?"
-        )
+        msg.body(menu_bienvenida)
         usuarios_estado[user_id] = "esperando_en_menu"
 
     elif estado == "esperando_en_menu":
-        response = respuesta_menu_precio(incoming_msg) 
-        msg.body(response[0])
-        if response[1] == "precios":
-            usuarios_estado[user_id] = "menu_precios"
-        else:
-            usuarios_estado[user_id] = "esperando_en_menu"
-
+        mensaje, nuevo_estado = respuesta_menu_precio(incoming_msg) 
+        msg.body(mensaje)
+        usuarios_estado[user_id] = nuevo_estado
+        
     elif estado == "menu_precios":
-        response = respuesta_confirmacion(incoming_msg)
-        msg.body(response)
+        mensaje, nuevo_estado = respuesta_confirmacion(incoming_msg)
+        msg.body(mensaje)
+        usuarios_estado[user_id] = nuevo_estado
 
-        usuarios_estado[user_id] = "Inicio"  # Reiniciar estado después de la confirmación
+    elif estado == "menu_clase":
+        mensaje, nuevo_estado = (None, "Inicio")  # Aquí deberías definir la lógica para el menú de clases
+        msg.body(mensaje)
+        usuarios_estado[user_id] = nuevo_estado
 
-
+    elif estado == "menu_inscripcion":
+        mensaje, nuevo_estado = (None, "Inicio")  # Aquí deberías definir la lógica para el menú de clases
+        msg.body(mensaje)
+        usuarios_estado[user_id] = nuevo_estado
+    
     else:
         msg.body("Reiniciando Estado")
         usuarios_estado[user_id] = "Inicio"
         msg2 = resp.message()
-        msg2.body(
-            "¿Te interesa conocer precios, clases o inscribirte?"
-        )
+        msg2.body(menu_bienvenida)
 
     return Response(str(resp), mimetype="application/xml", status=200)
 

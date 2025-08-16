@@ -1,3 +1,8 @@
+menu_bienvenida = (
+    "Hola, bienvenido al Club Deportivo.\n"
+    "¿Te interesa conocer precios, clases o inscribirte?"
+)
+
 saludos = [
     "hola", "buenas", "buenos días", "buenas tardes", "buenas noches",
     "hey", "qué tal", "saludos", "holi", "hello", "hi", "buen dia"
@@ -17,6 +22,15 @@ precio_keywords = [
     "cuesta", "precios", "tarifas", "costo", "mensualidad", "precio"
 ]
 
+clase_keywords = [
+    "clase", "clases", 
+]
+
+inscripcion_keywords = [
+    "inscripción", "inscribirme"
+]
+
+
 acepto_keywords = [
     "me gustaria", "claro", "por supuesto", "acepto", 
     "de acuerdo", "ok"
@@ -35,7 +49,7 @@ menu_precios_opcion_clase = [
 ]
 
 menu_precios_informacion = [
-    "mas información", "info", "detalles", "información", "dime mas",
+    "mas informacion", "info", "detalles", "informacion", "dime mas",
     "saber mas"
 ]
 
@@ -53,6 +67,8 @@ menu_precios = """
        - Inscríbete esta semana y recibe una clase personalizada gratis\n\n
     ¿Te gustaría agendar una clase de prueba o recibir más información?
     """
+
+
 
 
 respuestas = {
