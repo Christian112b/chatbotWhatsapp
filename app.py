@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 from flask import Flask, request, Response
 from twilio.twiml.messaging_response import MessagingResponse
 
-from functions.validations import clasificacion_mensaje
+from functions.validations import *
 
 load_dotenv()
 app = Flask(__name__)
