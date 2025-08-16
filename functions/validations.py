@@ -1,6 +1,6 @@
 saludos = [
     "hola", "buenas", "buenos días", "buenas tardes", "buenas noches",
-    "hey", "qué tal", "saludos", "holi", "hello", "hi", "qué onda"
+    "hey", "qué tal", "saludos", "holi", "hello", "hi", "buen dia"
 ]
 
 agradecimientos = [
@@ -14,10 +14,20 @@ despedidas = [
 ]
 
 respuestas = {
-    "saludo": "¡Hola! ¿Cómo puedo ayudarte hoy?",
+    "saludo": 
+        "Hola, bienvenido al Club Deportivo [Nombre del Club].\n\n"
+        "Estoy aquí para ayudarte. Puedes preguntarme sobre:\n"
+        "1. Horarios de atención\n"
+        "2. Precios y promociones\n"
+        "3. Clases disponibles (funcional, spinning, yoga, etc.)\n"
+        "4. Ubicación del club\n"
+        "5. Cómo inscribirte\n"
+        "6. Medidas de higiene y seguridad\n\n"
+        "Escríbeme lo que necesitas o selecciona una opción para comenzar.",
+        
     "despedida": "¡Adiós! Que tengas un buen día.",
     "agradecimiento": "¡De nada! Si necesitas algo más, no dudes en preguntar.",
-    "desconocido": "Lo siento, no entendí tu mensaje. Por favor, escribe 'hola' o 'adiós'."
+    "desconocido": "Lo siento, no entendí tu mensaje. ¿Podrías reformularlo?"
 }
 
 def clasificacion_mensaje(mensaje):
