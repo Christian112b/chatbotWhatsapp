@@ -15,7 +15,7 @@ def clasificacion_mensaje(mensaje):
 def respuesta_menu_precio(mensaje):
     mensaje = mensaje.lower()
 
-    if any(precio in mensaje for precio in respuesta_menu_precio):
+    if any(precio in mensaje for precio in precio_keywords):
         return menu_precios, "precios"
     elif any(clase in mensaje for clase in ["clases", "inscripción"]):
         return respuestas["respuesta_clases_inscripcion"], 200

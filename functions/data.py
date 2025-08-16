@@ -13,8 +13,8 @@ despedidas = [
     "chau", "me voy", "saludos", "hasta mañana"
 ]
 
-respuesta_menu_precio = [
-    "Cuesta", "precios", "tarifas", "costo", "mensualidad", "precio" 
+precio_keywords = [
+    "Cuesta", "precios", "tarifas", "costo", "mensualidad", "precio"
 ]
 
 menu_precios = """
