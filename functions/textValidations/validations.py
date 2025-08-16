@@ -37,5 +37,5 @@ def contieneSaludo(mensaje):
 def contieneDespedida(mensaje):
     return any(despedida in mensaje.lower() for despedida in despedidas)
 
-def contieneAgradecimiento(mensajes):
-    return any(agradecimiento in mensajes.lower() for agradecimiento in agradecimientos)
+def contieneAgradecimiento(mensaje):
+    return any(agradecimiento in mensaje.lower() for agradecimiento in agradecimientos)

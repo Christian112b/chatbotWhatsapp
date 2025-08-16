@@ -1,15 +1,12 @@
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask, request, Response
 from twilio.twiml.messaging_response import MessagingResponse
 
 from functions.textValidations import *
-
-import os
+from functions.textValidations import clasificacion_mensaje
 
 load_dotenv()
 app = Flask(__name__)
-
-
 
 @app.route("/whatsapp", methods=['POST'])
 def whatsapp_webhook():
