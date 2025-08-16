@@ -36,6 +36,13 @@ def whatsapp_webhook():
         else:
             usuarios_estado[user_id] = "esperando_en_menu"
 
+    elif estado == "menu_precios":
+        response = respuesta_confirmacion(incoming_msg)
+        msg.body(response)
+
+        usuarios_estado[user_id] = "Inicio"  # Reiniciar estado después de la confirmación
+
+
     else:
         msg.body("Reiniciando Estado")
         usuarios_estado[user_id] = "Inicio"

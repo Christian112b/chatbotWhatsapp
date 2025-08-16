@@ -14,19 +14,40 @@ despedidas = [
 ]
 
 precio_keywords = [
-    "Cuesta", "precios", "tarifas", "costo", "mensualidad", "precio"
+    "cuesta", "precios", "tarifas", "costo", "mensualidad", "precio"
+]
+
+acepto_keywords = [
+    "me gustaria", "claro", "por supuesto", "acepto", 
+    "de acuerdo", "ok"
+]
+
+no_acepto_keywords = [
+    "no", "no quiero", "no me interesa", "no gracias", "rechazo", "prefiero no", 
+    "no por ahora", "no deseo", "no acepto", "no estoy seguro", "no puedo", 
+    "no es posible", "no me gusta", "no funciona", "no aplica", "no lo haré"
+]
+
+menu_precios_opcion_clase = [
+    "agendar", "clase prueba", "clase", "reservar", "probar clase", 
+    "quiero clase", "quiero agendar", "quiero reservar", "inscribirme", "inscripción"
+]
+
+menu_precios_informacion = [
+    "mas información", "info", "detalles", "información", "dime mas",
+    "saber mas"
 ]
 
 menu_precios = """
-    Estos son nuestros planes disponibles:\n\n
-    1. Plan mensual general: $500 MXN\n
-       - Acceso ilimitado al gimnasio\n
-       - Clases grupales incluidas\n\n
-    2. Plan personalizado: $750 MXN\n
-       - Entrenamiento individual\n
-       - Seguimiento nutricional\n\n
-    3. Clase individual: $100 MXN\n
-       - Ideal para probar una sesión específica\n\n
+    Estos son nuestros planes disponibles:\n
+    1. Plan mensual general: $500 MXN
+       - Acceso ilimitado al gimnasio
+       - Clases grupales incluidas\n
+    2. Plan personalizado: $750 MXN
+       - Entrenamiento individual
+       - Seguimiento nutricional\n
+    3. Clase individual: $100 MXN
+       - Ideal para probar una sesión específica
     4. Promoción actual:\n
        - Inscríbete esta semana y recibe una clase personalizada gratis\n\n
     ¿Te gustaría agendar una clase de prueba o recibir más información?
