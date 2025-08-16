@@ -19,7 +19,7 @@ def whatsapp_webhook():
     resp = MessagingResponse()
     msg = resp.message()
 
-    msg.body(clasificar_mensaje(incoming_msg))
+    msg.body(clasificacion_mensaje(incoming_msg))
 
     return Response(str(resp), mimetype="application/xml", status=200)
 
