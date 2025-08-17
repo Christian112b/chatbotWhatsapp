@@ -54,7 +54,7 @@ def seleccion_plan(mensaje):
 def confirmacion(nombre, plan, telefono):
     
     return (
-        f"{nombre}, con numero: {telefono}, elegiste el {plan}.\n"
+        f"{nombre}, con numero: {telefono}, elegiste el plan numero: {plan}.\n"
         "¿Deseas confirmar tu inscripción?\n"
         "Responde con 'confirmar' para continuar o 'cancelar' para detener el proceso.",
         "esperando_confirmacion"
