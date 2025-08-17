@@ -69,9 +69,9 @@ menu_precios = """
     """
 
 planes = [
-    "1. Plan mensual general: $500 MXN",
-    "2. Plan personalizado: $750 MXN",
-    "3. Clase individual: $100 MXN"
+    "Plan mensual general: $500 MXN",
+    "Plan personalizado: $750 MXN",
+    "Clase individual: $100 MXN"
 ]
 
 
