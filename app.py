@@ -76,40 +76,114 @@ def whatsapp_webhook():
         msg.body(menu_bienvenida)
         usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
 
+    
+    # DEV USE --------------------------------- BORRAR DESPUES DE PRUEBAS
+    elif incoming_msg.lower() == "consulta" or usuarios_estado[user_id]["estado"] == "prueba":
+        test = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])
+        if test:
+            msg = resp.message()
+            msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['activo']}")
+        else:
+            msg = resp.message()
+            msg.body("No se encontró información con este numero de telefono")
+    
+    
+
     # Opciones para gente no inscrita y en estado de menu_no_inscrito
     elif userdata is None and usuarios_estado[user_id]["estado"] == "menu_no_inscrito":
         opcion = validacion_menu_no_activo(incoming_msg)
 
         # Opciones de menu para usuarios no inscritos -------------------------------------------
+        msg = resp.message()
 
         # Opcion de agendar clase
         if opcion == "agendar_clase":
-            msg = resp.message()
             msg.body("Para agendar una clase, por favor visita nuestro sitio web o contáctanos directamente al número +52 123 456 7890. ¡Te esperamos!")
-            usuarios_estado[user_id]["estado"] = "Inicio"
+            usuarios_estado[user_id]["estado"] = "generando_clase"
+
 
         # Opcion para informacion de precios y planes
         elif opcion == "info_precios":
-            msg = resp.message()
             msg.body("Para más información sobre nuestros precios y promociones, por favor visita nuestro sitio web o contáctanos directamente al número +52 123 456 7890. ¡Estamos aquí para ayudarte!")
-            usuarios_estado[user_id]["estado"] = "Inicio"
+            usuarios_estado[user_id]["estado"] = "info_precios"
 
         # Opcion para nueva inscripcion, formulario para crear usuario
         elif opcion == "nueva_inscripcion":
-            msg = resp.message()
-            msg.body("Para iniciar una nueva inscripción, por favor visita nuestro sitio web o contáctanos directamente al número +52 123 456 7890. ¡Te esperamos!")
-            usuarios_estado[user_id]["estado"] = "Inicio"
-        
+            msg.body("Para iniciar una nueva inscripción, por favor ingresa tu nombre completo.")
+            usuarios_estado[user_id]["estado"] = "validando_nombre"
+
         # Opcion si no se encuentra la keyword
         else:
-            msg = resp.message()
             msg.body("Lo siento, no entendí tu solicitud. ¿Podrías reformularla?")
-            usuarios_estado[user_id]["estado"] = "Inicio"
-
 
         # Mensaje de salida, al seleccionar una opcion.
         msg2 = resp.message()
-        msg2.body("Gracias por tu consulta.")
+        msg2.body(menu_no_inscritos)
+
+
+    # elif usuarios_estado[user_id]["estado"] == "inscribiendo":
+
+
+    elif usuarios_estado[user_id]["estado"] == "validando_nombre":
+        nombre = incoming_msg
+        msg = resp.message()
+        mensaje = f'Nombre recibido: {nombre}. ¿Es correcto?\nEscribe "Sí" para continuar, o escribe tu nombre para reintentarlo.'
+
+        msg.body(mensaje)
+        usuarios_estado[user_id]["nombre"] = nombre
+        usuarios_estado[user_id]["estado"] = "confirmando_nombre"
+
+    elif usuarios_estado[user_id]["estado"] == "confirmando_nombre":
+        if incoming_msg.lower() == "sí":
+            msg = resp.message()
+            msg2 = resp.message()
+            msg.body("¡Genial!. Ahora elige el plan que deseas.")
+            msg2.body(planes)
+            usuarios_estado[user_id]["estado"] = "validando_plan"
+        else:
+            usuarios_estado[user_id]["estado"] = "validando_nombre"
+        
+    elif usuarios_estado[user_id]["estado"] == "validando_plan":
+        plan_seleccionado = incoming_msg
+        if plan_seleccionado in ["1", "2", "3"]:
+            msg = resp.message()
+            msg2 = resp.message()   
+            msg.body(f"Has seleccionado el {planes[int(plan_seleccionado) - 1 ]}.")
+            msg2.body("Por favor, elige la duración de tu membresía:\n1. 1 mes\n2. 3 meses\n3. 6 meses\n4. 9 meses\n5. 12 meses\n\nResponde con el número de la opción que prefieras.")
+
+            usuarios_estado[user_id]["plan"] = plan_seleccionado
+            usuarios_estado[user_id]["estado"] = "validando_inscripcion"
+        else:
+            msg = resp.message()
+            msg.body("Opción no válida. Por favor, selecciona un plan válido.")
+            usuarios_estado[user_id]["estado"] = "validando_plan"
+
+    elif usuarios_estado[user_id]["estado"] == "validando_inscripcion":
+        plan_seleccionado = usuarios_estado[user_id]["plan"]
+        duracion = incoming_msg
+        total = calcular_total(plan_seleccionado, duracion)
+
+        msg = resp.message()
+        msg.body(f"Nombre: {usuarios_estado[user_id]['nombre']}\nPlan: {planes[int(plan_seleccionado) - 1 ]}\nDuración: {duracion}, Total: {total}")
+        msg2 = resp.message()
+        msg2.body("Por favor, confirma tu inscripción respondiendo 'sí' o 'no'.")
+        usuarios_estado[user_id]["estado"] = "confirmando_inscripcion"
+        usuarios_estado[user_id]["duracion"] = duracion
+        usuarios_estado[user_id]["total"] = total
+
+    elif usuarios_estado[user_id]["estado"] == "confirmando_inscripcion":
+        if incoming_msg.lower() == "sí":
+
+            # Guardar la inscripción en la base de datos
+            db.guardar_inscripcion(usuarios_estado[user_id])
+
+            msg = resp.message()
+            msg.body("¡Genial!. Listo, ahora eres parte de nuestra comunidad!")
+            msg2.body(planes)
+            usuarios_estado[user_id]["estado"] = "prueba"
+        else:
+            usuarios_estado[user_id] = {}
+            usuarios_estado[user_id]["estado"] = "Inicio"
 
         # ----------------------------------------------------------------------------------------
 

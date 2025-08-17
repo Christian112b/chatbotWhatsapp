@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 class dbClub:
     def __init__(self):
@@ -14,19 +15,44 @@ class dbClub:
                 telefono TEXT,
                 nombre TEXT,
                 plan INTEGER,
-                activo BOOLEAN
-            )
-        ''')
+                duracion INTEGER,
+                fecha_inscripcion DATE,
+                fecha_ultimo_pago DATE,
+                fecha_caducacidad_pago DATE,
+                cantidad_pago INTEGER
+                )
+            ''')
         conn.commit()
         conn.close()
 
-    def guardar_inscripcion(self, telefono, nombre, plan, activo):
+    def guardar_inscripcion(self, userdict):
+
+        telefono = userdict['telefono']
+        nombre = userdict['nombre']
+        plan = userdict['plan']
+        duracion = userdict['duracion']
+        total = userdict['total']
+        fecha_inscripcion = datetime.now().date()
+        fecha_ultimo_pago = fecha_inscripcion
+        fecha_caducidad_pago = fecha_ultimo_pago + relativedelta(months=duracion)
+
         conn = sqlite3.connect(self.dbName)
         c = conn.cursor()
         c.execute(
-            "INSERT INTO inscripciones (telefono, nombre, plan, activo) VALUES (?, ?, ?, ?)",
-            (telefono, nombre, plan, activo)
-        )
+            f'''INSERT INTO 
+                inscripciones 
+                    (telefono, 
+                    nombre, 
+                    plan, 
+                    duracion, 
+                    fecha_inscripcion,
+                    fecha_ultimo_pago,
+                    fecha_caducacidad_pago,
+                    cantidad_pago
+                    ) 
+                VALUES (?, ?, ?, ?)",
+                    {(telefono, nombre, plan, duracion, fecha_inscripcion, fecha_ultimo_pago, fecha_caducidad_pago, total)}
+        ''')
         conn.commit()
         conn.close()
 

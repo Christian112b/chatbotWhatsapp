@@ -88,5 +88,21 @@ def validacion_menu_no_activo(mensaje):
         return "info_precios"
     elif any(keyword in mensaje for keyword in inscripcion_keywords):
         return "nueva_inscripcion"
-    
-    
+
+def calcular_total(plan, duracion):
+    precios = {
+        "1": 500,
+        "2": 750,
+        "3": 100
+    }
+    duraciones = {
+        "1": 1,
+        "2": 3,
+        "3": 6,
+        "4": 9,
+        "5": 12
+    }
+
+    if plan in precios and duracion in duraciones:
+        return precios[plan] * duraciones[duracion]
+    return 0

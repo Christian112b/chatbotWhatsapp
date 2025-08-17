@@ -2,6 +2,10 @@ menu_bienvenida = (
     "Hola, gracias por escribir al Club Deportivo. ¿Qué te interesa saber: precios, clases o cómo inscribirte?"
 )
 
+menu_no_inscritos = (
+    "¿Te gustaría saber más sobre nuestros planes, clases o cómo inscribirte?"
+)
+
 precio_keywords = [
     "cuesta", "precios", "tarifas", "costo", "mensualidad", "precio"
 ]
@@ -53,9 +57,9 @@ menu_precios = """
     """
 
 planes = [
-    "Plan mensual general: $500 MXN",
-    "Plan personalizado: $750 MXN",
-    "Clase individual: $100 MXN"
+    "1. Plan mensual general: $500 MXN",
+    "2. Plan personalizado: $750 MXN",
+    "3. Clase individual: $100 MXN"
 ]
 
 
