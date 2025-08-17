@@ -108,9 +108,6 @@ def whatsapp_webhook():
         usuarios_estado[user_id]["estado"] = "Inicio"
     #--------------------------
 
-    
-       
-
     else:
         msg = resp.message()
         msg.body("Bienvenido de nuevo")
