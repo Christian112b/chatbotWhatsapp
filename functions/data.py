@@ -90,9 +90,10 @@ planes_keyword = [
 
 agendar_keyword = [
     "agendar", "clase prueba", "clase", "reservar", "clase", 
-    "agendar", "reservar", "inscribirme", 
-    "inscripción", "clase de prueba"
+    "agendar", "reservar", "clase de prueba"
     ]
+
+
 
 
 

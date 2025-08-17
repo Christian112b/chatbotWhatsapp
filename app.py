@@ -80,26 +80,38 @@ def whatsapp_webhook():
     elif userdata is None and usuarios_estado[user_id]["estado"] == "menu_no_inscrito":
         opcion = validacion_menu_no_activo(incoming_msg)
 
+        # Opciones de menu para usuarios no inscritos -------------------------------------------
+
+        # Opcion de agendar clase
         if opcion == "agendar_clase":
             msg = resp.message()
             msg.body("Para agendar una clase, por favor visita nuestro sitio web o contáctanos directamente al número +52 123 456 7890. ¡Te esperamos!")
             usuarios_estado[user_id]["estado"] = "Inicio"
 
+        # Opcion para informacion de precios y planes
         elif opcion == "info_precios":
             msg = resp.message()
             msg.body("Para más información sobre nuestros precios y promociones, por favor visita nuestro sitio web o contáctanos directamente al número +52 123 456 7890. ¡Estamos aquí para ayudarte!")
             usuarios_estado[user_id]["estado"] = "Inicio"
 
+        # Opcion para nueva inscripcion, formulario para crear usuario
         elif opcion == "nueva_inscripcion":
             msg = resp.message()
             msg.body("Para iniciar una nueva inscripción, por favor visita nuestro sitio web o contáctanos directamente al número +52 123 456 7890. ¡Te esperamos!")
             usuarios_estado[user_id]["estado"] = "Inicio"
+        
+        # Opcion si no se encuentra la keyword
         else:
             msg = resp.message()
             msg.body("Lo siento, no entendí tu solicitud. ¿Podrías reformularla?")
             usuarios_estado[user_id]["estado"] = "Inicio"
 
-    
+
+        # Mensaje de salida, al seleccionar una opcion.
+        msg2 = resp.message()
+        msg2.body("Gracias por tu consulta.")
+
+        # ----------------------------------------------------------------------------------------
 
 
 
