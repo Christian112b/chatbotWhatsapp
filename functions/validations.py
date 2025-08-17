@@ -15,7 +15,7 @@ def respuesta_menu_precio(mensaje):
         return "Esta respuesta es de clase", "menu_clase"
 
     elif any(insc in mensaje for insc in inscripcion_keywords):
-        return "¡Excelente! Por favor indica el número del plan (1-3) para iniciar tu inscripción.", "menu_inscripcion"
+        return "¡Excelente! Por favor indica el número del plan (1-3) para iniciar tu inscripción.\n" + planes, "menu_inscripcion"
 
     else:
         return "Lo siento, no entiendo tu solicitud, intentalo de nuevo.", "Inicio"
@@ -39,8 +39,7 @@ def seleccion_plan(mensaje):
         num_plan = int(match.group(1))
         if 1 <= num_plan <= len(planes):
             return f"""
-                ¡Perfecto! Has elegido el plan {num_plan}: {planes[num_plan-1]}\n
-                Por favor indícame tu nombre completo para finalizar la inscripción.
+                ¡Perfecto! Has elegido el plan {num_plan}: {planes[num_plan-1]}\n Por favor indícame tu nombre completo para finalizar la inscripción.
                 """, "confirmacion", num_plan
 
         else:
@@ -53,29 +52,22 @@ def seleccion_plan(mensaje):
     
 def confirmacion(nombre, plan, telefono):
     
-    return (
-        f"{nombre}, con numero: {telefono}, elegiste el plan numero: {plan}.\n"
+    return f"""{nombre}, con numero: {telefono}, elegiste el plan numero: {plan}.\n"
         "¿Deseas confirmar tu inscripción?\n"
-        "Responde con 'confirmar' para continuar o 'cancelar' para detener el proceso.",
-        "esperando_confirmacion"
-    )
-
+        "Responde con 'confirmar' para continuar o 'cancelar' para detener el proceso.""", "esperando_confirmacion"
+    
 def esperando_confirmacion(mensaje):
+    mensaje = mensaje.lower()
+
     if "confirmar" in mensaje:
-        return (
+        return """
             "¡Perfecto! Tu inscripción ha sido confirmada.\n"
-            "Si tienes alguna pregunta, no dudes en contactarnos.",
-            "Inicio"
-        )
+            "Si tienes alguna pregunta, no dudes en contactarnos.""", "Inicio"
+    
     elif "cancelar" in mensaje:
-        return (
-            "Tu inscripción ha sido cancelada.\n"
-            "Si cambias de opinión, aquí estaremos.",
-            "Inicio"
-        )
+        return """Tu inscripción ha sido cancelada.\n"
+            "Si cambias de opinión, aquí estaremos.""", "Inicio"
+
     else:
-        return (
-            "Lo siento, no entiendo tu respuesta.\n"
-            "Por favor responde con 'confirmar' o 'cancelar'.",
-            "esperando_confirmacion"
-        )
+        return """Lo siento, no entiendo tu respuesta.\n"
+            "Por favor responde con 'confirmar' o 'cancelar'.""", "esperando_confirmacion"
