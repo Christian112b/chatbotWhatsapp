@@ -14,18 +14,18 @@ class dbClub:
                 telefono TEXT,
                 nombre TEXT,
                 plan INTEGER,
-                inscrito BOOLEAN
+                activo BOOLEAN
             )
         ''')
         conn.commit()
         conn.close()
 
-    def guardar_inscripcion(self, telefono, nombre, plan, inscrito):
+    def guardar_inscripcion(self, telefono, nombre, plan, activo):
         conn = sqlite3.connect(self.dbName)
         c = conn.cursor()
         c.execute(
-            "INSERT INTO inscripciones (telefono, nombre, plan, inscrito) VALUES (?, ?, ?, ?)",
-            (telefono, nombre, plan, inscrito)
+            "INSERT INTO inscripciones (telefono, nombre, plan, activo) VALUES (?, ?, ?, ?)",
+            (telefono, nombre, plan, activo)
         )
         conn.commit()
         conn.close()
@@ -43,7 +43,7 @@ class dbClub:
                 "telefono": resultado[0][1],
                 "nombre": resultado[0][2],
                 "plan": resultado[0][3],
-                "inscrito": resultado[0][4]
+                "activo": resultado[0][4]
             }
         return None
 
