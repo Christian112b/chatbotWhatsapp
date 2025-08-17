@@ -12,7 +12,7 @@ clase_keywords = [
 ]
 
 inscripcion_keywords = [
-    "inscripción", "inscribirme"
+    "inscripción", "inscribirme", "inscribir"
 ]
 
 

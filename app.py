@@ -60,7 +60,7 @@ def whatsapp_webhook():
             msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['inscrito']}")
         else:
             msg = resp.message()
-            msg.body("No se encontró información.")
+            msg.body("No se encontró información con este numero de telefono")
 
     #--------------------------
 
