@@ -70,10 +70,23 @@ def esperando_confirmacion(mensaje):
     else:
         return """Lo siento, no entiendo tu respuesta. Por favor responde con 'confirmar' o 'cancelar'.""", "esperando_confirmacion"
 
-def validacion_menu_activo(mensaje):
+# def validacion_menu_activo(mensaje):
+#     mensaje = mensaje.lower()
+
+#     if any(keyword in mensaje for keyword in planes_keyword):
+#         return plan,  
+#     elif any(keyword in mensaje for keyword in agendar_keyword):
+#         return
+
+
+def validacion_menu_no_activo(mensaje):
     mensaje = mensaje.lower()
 
-    if any(keyword in mensaje for keyword in planes_keyword):
-        return plan,  
-    elif any(keyword in mensaje for keyword in agendar_keyword):
-        return
+    if any(keyword in mensaje for keyword in agendar_keyword):
+        return "agendar_clase"
+    elif any(keyword in mensaje for keyword in precio_keywords):
+        return "info_precios"
+    elif any(keyword in mensaje for keyword in inscripcion_keywords):
+        return "nueva_inscripcion"
+    
+    
