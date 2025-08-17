@@ -82,12 +82,19 @@ def whatsapp_webhook():
         test = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])
         if test:
             msg = resp.message()
-            msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['activo']}")
+            msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['duracion']}")
         else:
             msg = resp.message()
             msg.body("No se encontró información con este numero de telefono")
-
         usuarios_estado[user_id]["estado"] = "Inicio"
+
+    elif incoming_msg.lower() == "reiniciar":
+        usuarios_estado.pop(user_id, None)
+        usuarios_estado[user_id]["estado"] = "Inicio"
+        db.borrar_tabla()
+
+        msg = resp.message()
+        msg.body("Estado reiniciado. ¿Cómo puedo ayudarte hoy?")
     # ----------------------------------------- BORRAR DESPUES DE PRUEBAS
 
 
@@ -144,7 +151,7 @@ def whatsapp_webhook():
             usuarios_estado[user_id]["nombre"] = incoming_msg
             usuarios_estado[user_id]["estado"] = "confirmando_nombre"
 
-            
+
         
     elif usuarios_estado[user_id]["estado"] == "validando_plan":
         plan_seleccionado = incoming_msg

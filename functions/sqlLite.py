@@ -79,7 +79,7 @@ class dbClub:
                 "telefono": resultado[0][1],
                 "nombre": resultado[0][2],
                 "plan": resultado[0][3],
-                "activo": resultado[0][4]
+                "duracion": resultado[0][4]
             }
         return None
 
@@ -87,5 +87,12 @@ class dbClub:
         conn = sqlite3.connect(self.dbName)
         c = conn.cursor()
         c.execute("DELETE * FROM inscripciones")
+        conn.commit()
+        conn.close()
+
+    def borrar_tabla(self):
+        conn = sqlite3.connect(self.dbName)
+        c = conn.cursor()
+        c.execute("DROP TABLE IF EXISTS inscripciones")
         conn.commit()
         conn.close()
