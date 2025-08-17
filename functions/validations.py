@@ -15,7 +15,11 @@ def respuesta_menu_precio(mensaje):
         return "Esta respuesta es de clase", "menu_clase"
 
     elif any(insc in mensaje for insc in inscripcion_keywords):
-        return "¡Excelente! Por favor indica el número del plan (1-3) para iniciar tu inscripción.\n" + planes, "menu_inscripcion"
+        opciones = "\n".join([f"{i+1}. {plan}" for i, plan in enumerate(planes)])
+        return (
+            f"¡Excelente! Por favor indica el número del plan para iniciar tu inscripción:\n{opciones}",
+            "menu_inscripcion"
+        )
 
     else:
         return "Lo siento, no entiendo tu solicitud, intentalo de nuevo.", "Inicio"
