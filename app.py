@@ -89,8 +89,9 @@ def whatsapp_webhook():
         usuarios_estado[user_id]["estado"] = "Inicio"
 
     elif incoming_msg.lower() == "reiniciar":
-        usuarios_estado.pop(user_id, None)
-        usuarios_estado[user_id]["estado"] = "Inicio"
+        usuarios_estado.pop(user_id, None)  # Elimina cualquier estado previo
+
+        usuarios_estado[user_id] = {"estado": "Inicio"}  # Reinicia el estado
         db.borrar_tabla()
 
         msg = resp.message()
