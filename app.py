@@ -32,7 +32,7 @@ def whatsapp_webhook():
         usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "inscrito": False}
     
     estado = usuarios_estado[user_id]["estado"]
-    usuarios_estado[user_id]["Telefono"] = limpiar_telefono(user_id)
+    usuarios_estado[user_id]["telefono"] = limpiar_telefono(user_id)
 
     resp = MessagingResponse()
 
