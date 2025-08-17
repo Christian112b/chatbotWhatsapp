@@ -47,14 +47,11 @@ def whatsapp_webhook():
         usuarios_estado[user_id]["inscrito"] = userdata["inscrito"]
 
 
-
-
-        
     # DEV USE
     if incoming_msg.lower() == "reiniciar":
-        reiniciar_estado(user_id)
+        msg, usuarios_estado = reiniciar_estado(user_id)
     #--------------------------
-    
+
 
 
 
