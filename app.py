@@ -40,13 +40,13 @@ def whatsapp_webhook():
     resp = MessagingResponse()
 
     # SQLObject
-    db = dbClub()
-    userdata = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])    
+    # db = dbClub()
+    # userdata = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])    
 
-    if userdata:
-        usuarios_estado[user_id]["nombre"] = userdata["nombre"]
-        usuarios_estado[user_id]["plan"] = userdata["plan"]
-        usuarios_estado[user_id]["inscrito"] = userdata["inscrito"]
+    # if userdata:
+    #     usuarios_estado[user_id]["nombre"] = userdata["nombre"]
+    #     usuarios_estado[user_id]["plan"] = userdata["plan"]
+    #     usuarios_estado[user_id]["inscrito"] = userdata["inscrito"]
 
     # DEV USE
     if incoming_msg.lower() == "reiniciar":
@@ -63,8 +63,6 @@ def whatsapp_webhook():
             msg.body("No se encontró información con este numero de telefono")
 
     #--------------------------
-
-
 
     elif usuarios_estado[user_id]["inscrito"]:
         msg = resp.message()
