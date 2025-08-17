@@ -97,42 +97,38 @@ def whatsapp_webhook():
         opcion = validacion_menu_no_activo(incoming_msg)
 
         # Opciones de menu para usuarios no inscritos -------------------------------------------
-        msg = resp.message()
 
         # Opcion de agendar clase
         if opcion == "agendar_clase":
+            msg = resp.message()
             msg.body("Para agendar una clase, por favor visita nuestro sitio web o contáctanos directamente al número +52 123 456 7890. ¡Te esperamos!")
             usuarios_estado[user_id]["estado"] = "generando_clase"
 
-
         # Opcion para informacion de precios y planes
         elif opcion == "info_precios":
+            msg = resp.message()
             msg.body("Para más información sobre nuestros precios y promociones, por favor visita nuestro sitio web o contáctanos directamente al número +52 123 456 7890. ¡Estamos aquí para ayudarte!")
             usuarios_estado[user_id]["estado"] = "info_precios"
 
         # Opcion para nueva inscripcion, formulario para crear usuario
         elif opcion == "nueva_inscripcion":
+            msg = resp.message()
             msg.body("Para iniciar una nueva inscripción, por favor ingresa tu nombre completo.")
             usuarios_estado[user_id]["estado"] = "validando_nombre"
 
         # Opcion si no se encuentra la keyword
         else:
-            msg.body("Lo siento, no entendí tu solicitud. ¿Podrías reformularla?")
-
-        # Mensaje de salida, al seleccionar una opcion.
-        # msg2 = resp.message()
-        # msg2.body(menu_no_inscritos)
-
-
-    # elif usuarios_estado[user_id]["estado"] == "inscribiendo":
+            msg = resp.message()
+            msg.body("Lo siento, no entendí tu opcion. ¿Podrías reformularla?")
 
 
     elif usuarios_estado[user_id]["estado"] == "validando_nombre":
-        nombre = incoming_msg
         msg = resp.message()
-        mensaje = f'Nombre recibido: {nombre}. ¿Es correcto?\nEscribe "Sí" para continuar, o escribe tu nombre para reintentarlo.'
+        nombre = incoming_msg
 
+        mensaje = f'Nombre recibido: {nombre}. ¿Es correcto?\nEscribe "Sí" para continuar, o escribe tu nombre para reintentarlo.'
         msg.body(mensaje)
+        
         usuarios_estado[user_id]["nombre"] = nombre
         usuarios_estado[user_id]["estado"] = "confirmando_nombre"
 
