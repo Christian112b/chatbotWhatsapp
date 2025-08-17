@@ -56,7 +56,7 @@ def whatsapp_webhook():
         elif estado == "menu_inscripcion":
             mensaje, nuevo_estado, num_plan = seleccion_plan(incoming_msg)
             msg = resp.message()
-            msg.body(mensaje)
+            msg.body(nuevo_estado)
             usuarios_estado[user_id]["estado"] = nuevo_estado
             usuarios_estado[user_id]["Plan"] = num_plan
 
