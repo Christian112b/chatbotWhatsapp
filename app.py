@@ -86,8 +86,11 @@ def whatsapp_webhook():
         else:
             msg = resp.message()
             msg.body("No se encontró información con este numero de telefono")
-    
-    
+
+        usuarios_estado[user_id]["estado"] = "Inicio"
+    # ----------------------------------------- BORRAR DESPUES DE PRUEBAS
+
+
 
     # Opciones para gente no inscrita y en estado de menu_no_inscrito
     elif userdata is None and usuarios_estado[user_id]["estado"] == "menu_no_inscrito":
@@ -117,8 +120,8 @@ def whatsapp_webhook():
             msg.body("Lo siento, no entendí tu solicitud. ¿Podrías reformularla?")
 
         # Mensaje de salida, al seleccionar una opcion.
-        msg2 = resp.message()
-        msg2.body(menu_no_inscritos)
+        # msg2 = resp.message()
+        # msg2.body(menu_no_inscritos)
 
 
     # elif usuarios_estado[user_id]["estado"] == "inscribiendo":
