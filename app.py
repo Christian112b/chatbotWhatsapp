@@ -22,9 +22,6 @@ usuarios_estado = {}
     }
 """
 
-
-
-
 @app.route("/webhook", methods=['POST'])
 def whatsapp_webhook():
     incoming_msg = request.values.get('Body', '').strip()
@@ -42,7 +39,7 @@ def whatsapp_webhook():
         if estado == "Inicio":
             msg = resp.message()
             msg.body(menu_bienvenida)
-            usuarios_estado[user_id] = "esperando_en_menu"
+            usuarios_estado[user_id]["estado"] = "esperando_en_menu"
 
         elif estado == "esperando_en_menu":
             mensaje, nuevo_estado = respuesta_menu_precio(incoming_msg)
