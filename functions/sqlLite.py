@@ -25,7 +25,7 @@ class dbClub:
         c = conn.cursor()
         c.execute(
             "INSERT INTO inscripciones (telefono, nombre, plan, inscrito) VALUES (?, ?, ?, ?)",
-            (telefono, nombre, plan, iscrito)
+            (telefono, nombre, plan, inscrito)
         )
         conn.commit()
         conn.close()
