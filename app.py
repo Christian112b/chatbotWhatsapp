@@ -71,7 +71,7 @@ def whatsapp_webhook():
             usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
 
     # Opciones para gente no inscrita
-    elif userdata is None and usuarios_estado[user_id]["estado"] != "menu_no_inscrito":
+    elif userdata is None and usuarios_estado[user_id]["estado"] == "Inicio":
         msg = resp.message()
         msg.body(menu_bienvenida)
         usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
