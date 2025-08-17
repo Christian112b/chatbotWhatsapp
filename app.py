@@ -46,7 +46,7 @@ def whatsapp_webhook():
 
 
 
-    if usuarios_estado[user_id]["Inscrito"] is False:
+    elif usuarios_estado[user_id]["Inscrito"] is False:
         if estado == "Inicio":
             msg = resp.message()
             msg.body(menu_bienvenida)
