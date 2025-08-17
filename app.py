@@ -11,7 +11,7 @@ app = Flask(__name__)
 # Diccionario para almacenar el estado de cada usuario
 usuarios_estado = {}
 
-@app.route("/whatsapp", methods=['POST'])
+@app.route("/webhook", methods=['POST'])
 def whatsapp_webhook():
     incoming_msg = request.values.get('Body', '').strip()
     user_id = request.values.get('From', '')
