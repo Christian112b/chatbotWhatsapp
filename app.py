@@ -127,21 +127,24 @@ def whatsapp_webhook():
     elif usuarios_estado[user_id]["estado"] == "validando_nombre":
         nombre = incoming_msg
         msg = resp.message()
-        mensaje = f'Nombre recibido: {nombre}. ¿Es correcto?\nEscribe "Sí" para continuar, o escribe tu nombre para reintentarlo.'
+        mensaje = f'Nombre recibido: {nombre}. ¿Es correcto?\nEscribe "Continuar" para continuar, o escribe tu nombre para reintentarlo.'
 
         msg.body(mensaje)
         usuarios_estado[user_id]["nombre"] = nombre
         usuarios_estado[user_id]["estado"] = "confirmando_nombre"
 
     elif usuarios_estado[user_id]["estado"] == "confirmando_nombre":
-        if incoming_msg.lower() == "sí":
+        if incoming_msg.lower() == "continuar":
             msg = resp.message()
-            msg2 = resp.message()
             msg.body("¡Genial!. Ahora elige el plan que deseas.")
+
+            msg2 = resp.message()
             msg2.body(planes)
             usuarios_estado[user_id]["estado"] = "validando_plan"
         else:
-            usuarios_estado[user_id]["estado"] = "validando_nombre"
+            msg = resp.message()
+            mensaje = f'Nombre recibido: {incoming_msg}. ¿Es correcto?\nEscribe "Continuar" para continuar, o escribe tu nombre para reintentarlo.'
+            usuarios_estado[user_id]["estado"] = "confirmando_nombre"
         
     elif usuarios_estado[user_id]["estado"] == "validando_plan":
         plan_seleccionado = incoming_msg
