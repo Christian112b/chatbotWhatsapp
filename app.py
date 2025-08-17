@@ -29,6 +29,8 @@ def whatsapp_webhook():
     incoming_msg = request.values.get('Body', '').strip()
     user_id = request.values.get('From', '')
 
+    global usuarios_estado
+
     if user_id not in usuarios_estado:
         usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "inscrito": False}
     
