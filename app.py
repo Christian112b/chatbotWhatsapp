@@ -129,7 +129,7 @@ def whatsapp_webhook():
         mensaje = f'Nombre recibido: {nombre}. ¿Es correcto?\nEscribe "Sí" para continuar, o escribe tu nombre para reintentarlo.'
         msg.body(mensaje)
         
-        usuarios_estado[user_id]["nombre"] = nombre
+        usuarios_estado[user_id]["nombre"] = incoming_msg
         usuarios_estado[user_id]["estado"] = "confirmando_nombre"
 
     elif usuarios_estado[user_id]["estado"] == "confirmando_nombre":
@@ -141,6 +141,7 @@ def whatsapp_webhook():
         else:
             msg = resp.message()
             mensaje = f'Nombre recibido: {incoming_msg}. ¿Es correcto?\nEscribe "Continuar" para continuar, o escribe tu nombre para reintentarlo.'
+            usuarios_estado[user_id]["nombre"] = incoming_msg
             usuarios_estado[user_id]["estado"] = "confirmando_nombre"
         
     elif usuarios_estado[user_id]["estado"] == "validando_plan":
