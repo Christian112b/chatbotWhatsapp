@@ -62,13 +62,18 @@ menu_precios = """
        - Entrenamiento individual
        - Seguimiento nutricional\n
     3. Clase individual: $100 MXN
-       - Ideal para probar una sesión específica
-    4. Promoción actual:\n
+       - Ideal para probar una sesión específica\n
+    4. Promoción actual:
        - Inscríbete esta semana y recibe una clase personalizada gratis\n\n
     ¿Te gustaría agendar una clase de prueba o recibir más información?
     """
 
-
+planes = [
+    "Plan mensual general: $500 MXN",
+    "Plan personalizado: $750 MXN",
+    "Clase individual: $100 MXN",
+    # Puedes agregar más planes aquí
+]
 
 
 respuestas = {
