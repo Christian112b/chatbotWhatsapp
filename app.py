@@ -51,8 +51,20 @@ def whatsapp_webhook():
     # DEV USE
     if incoming_msg.lower() == "reiniciar":
         usuarios_estado.pop(user_id, None)
-        msg, usuarios_estado = reiniciar_estado(user_id)
+        msg = reiniciar_estado(user_id)
+    
+    elif incoming_msg.lower() == "consulta":
+        test = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])
+        if test:
+            msg = resp.message()
+            msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['inscrito']}")
+        else:
+            msg = resp.message()
+            msg.body("No se encontró información.")
+
     #--------------------------
+
+
 
     elif usuarios_estado[user_id]["inscrito"]:
         msg = resp.message()
