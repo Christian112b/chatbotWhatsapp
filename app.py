@@ -35,6 +35,17 @@ def whatsapp_webhook():
 
     resp = MessagingResponse()
 
+    # DEV USE
+    if incoming_msg.lower() == "reiniciar":
+        msg = resp.message()
+        msg.body("Reiniciando Estado")
+        usuarios_estado[user_id]["estado"] = "Inicio"
+        msg2 = resp.message()
+        msg2.body(menu_bienvenida)
+
+
+
+
     if usuarios_estado[user_id]["Inscrito"] is False:
         if estado == "Inicio":
             msg = resp.message()

@@ -42,8 +42,9 @@ def seleccion_plan(mensaje):
     if match:
         num_plan = int(match.group(1))
         if 1 <= num_plan <= len(planes):
+            plan_texto = planes[num_plan-1].split('. ', 1)[-1]
             return f"""
-                ¡Perfecto! Has elegido el plan {num_plan}: {planes[num_plan-1]}\n Por favor indícame tu nombre completo para finalizar la inscripción.
+                ¡Perfecto! Has elegido el plan {num_plan}: {plan_texto}\n Por favor indícame tu nombre completo para finalizar la inscripción.
                 """, "confirmacion", num_plan
 
         else:
@@ -55,11 +56,8 @@ def seleccion_plan(mensaje):
         
     
 def confirmacion(nombre, plan, telefono):
-    
-    return f"""{nombre}, con numero: {telefono}, elegiste el plan numero: {plan}.\n"
-        "¿Deseas confirmar tu inscripción?\n"
-        "Responde con 'confirmar' para continuar o 'cancelar' para detener el proceso.""", "esperando_confirmacion"
-    
+    return f"""{nombre}, con numero: {telefono}, elegiste el plan numero: {plan}.\n¿Deseas confirmar tu inscripción?\nResponde con 'confirmar' para continuar o 'cancelar' para detener el proceso.""", "esperando_confirmacion"
+
 def esperando_confirmacion(mensaje):
     mensaje = mensaje.lower()
 
