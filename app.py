@@ -130,19 +130,17 @@ def whatsapp_webhook():
     elif usuarios_estado[user_id]["estado"] == "validando_nombre":
         nombre = incoming_msg
         msg = resp.message()
-        mensaje = f'Nombre recibido: {nombre}. ¿Es correcto?\nEscribe "Continuar" para continuar, o escribe tu nombre para reintentarlo.'
+        mensaje = f'Nombre recibido: {nombre}. ¿Es correcto?\nEscribe "Sí" para continuar, o escribe tu nombre para reintentarlo.'
 
         msg.body(mensaje)
         usuarios_estado[user_id]["nombre"] = nombre
         usuarios_estado[user_id]["estado"] = "confirmando_nombre"
 
     elif usuarios_estado[user_id]["estado"] == "confirmando_nombre":
-        if incoming_msg.lower() == "continuar":
+        if incoming_msg.lower() == "sí" or incoming_msg.lower() == "si":
             msg = resp.message()
-            msg.body("¡Genial!. Ahora elige el plan que deseas.")
+            msg.body("¡Genial!. Ahora elige el plan que deseas.\n + {planes}\n\nResponde con el número del plan que prefieras.")
 
-            msg2 = resp.message()
-            msg2.body(planes)
             usuarios_estado[user_id]["estado"] = "validando_plan"
         else:
             msg = resp.message()
@@ -178,7 +176,7 @@ def whatsapp_webhook():
         usuarios_estado[user_id]["total"] = total
 
     elif usuarios_estado[user_id]["estado"] == "confirmando_inscripcion":
-        if incoming_msg.lower() == "sí":
+        if incoming_msg.lower() == "sí" or incoming_msg.lower() == "si":
 
             # Guardar la inscripción en la base de datos
             db.guardar_inscripcion(usuarios_estado[user_id])
