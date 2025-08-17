@@ -179,7 +179,7 @@ def whatsapp_webhook():
 
             msg = resp.message()
             msg.body("¡Genial!. Listo, ahora eres parte de nuestra comunidad!")
-            msg2.body(planes)
+            
             usuarios_estado[user_id]["estado"] = "prueba"
         else:
             usuarios_estado[user_id] = {}
