@@ -1,6 +1,5 @@
 menu_bienvenida = (
-    "Hola, bienvenido al Club Deportivo.\n"
-    "¿Te interesa conocer precios, clases o inscribirte?"
+    "Hola, gracias por escribir al Club Deportivo. ¿Qué te interesa saber: precios, clases o cómo inscribirte?"
 )
 
 precio_keywords = [
@@ -77,3 +76,29 @@ respuestas = {
     "desconocido": "Lo siento, no entendí tu mensaje. ¿Podrías reformularlo?",
     "respuesta_precios": "Aquí tienes la información sobre precios..."
 }   
+
+
+
+# Opciones para gente ya inscrita y activa
+bienvenido_activo = (
+    "Bienvenido nuevamente al Club Deportivo. ¿Deseas ver los detalles de tu plan o agendar una clase?"
+)
+
+planes_keyword = [
+    "detalles", "plan", "planes", "informacion"
+    ]
+
+agendar_keyword = [
+    "agendar", "clase prueba", "clase", "reservar", "clase", 
+    "agendar", "reservar", "inscribirme", 
+    "inscripción", "clase de prueba"
+    ]
+
+
+
+# ----------------------------------------------
+
+
+bienvenido_no_activo = (
+    "Lo sentimos, no estás activo en el club. ¿Te gustaría reactivar tu membresía o saber más sobre nuestros planes?"
+)

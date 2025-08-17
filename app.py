@@ -32,7 +32,7 @@ def whatsapp_webhook():
     global usuarios_estado
 
     if user_id not in usuarios_estado:
-        usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "inscrito": False}
+        usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "activo": False}
     
     estado = usuarios_estado[user_id]["estado"]
     usuarios_estado[user_id]["telefono"] = limpiar_telefono(user_id)
@@ -40,13 +40,47 @@ def whatsapp_webhook():
     resp = MessagingResponse()
 
     # SQLObject
-    # db = dbClub()
-    # userdata = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])    
+    db = dbClub()
+    userdata = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])    
 
-    # if userdata:
-    #     usuarios_estado[user_id]["nombre"] = userdata["nombre"]
-    #     usuarios_estado[user_id]["plan"] = userdata["plan"]
-    #     usuarios_estado[user_id]["inscrito"] = userdata["inscrito"]
+    # Opciones para gente ya inscrita
+    if userdata is not None:
+        usuarios_estado[user_id]["nombre"] = userdata["nombre"]
+        usuarios_estado[user_id]["plan"] = userdata["plan"]
+        usuarios_estado[user_id]["activo"] = userdata["activo"]
+
+        # Opciones para gente ya inscrita y activa
+        if usuarios_estado[user_id]["activo"] == 1 and usuarios_estado[user_id]["estado"] != "menu_inscrito":
+            msg = resp.message()
+            msg.body(bienvenido_activo) # Bienvenido a usuario activo
+            usuarios_estado[user_id]["estado"] = "menu_inscrito"
+
+        elif usuarios_estado[user_id]["activo"] == 1 and usuarios_estado[user_id]["estado"] == "menu_inscrito":
+            msg = resp.message()
+            msg.body(f"Mensaje: {incoming_msg}")
+
+
+
+            
+        # Opciones para gente ya inscrita y NO activa
+        else:
+            msg = resp.message()
+            msg.body(bienvenido_no_activo)
+            usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
+
+    # Opciones para gente no inscrita
+    else:
+        msg = resp.message()
+        msg.body(menu_bienvenida)
+        usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
+
+    
+
+
+
+
+
+
 
     # DEV USE
     if incoming_msg.lower() == "reiniciar":
@@ -57,7 +91,7 @@ def whatsapp_webhook():
         test = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])
         if test:
             msg = resp.message()
-            msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['inscrito']}")
+            msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['activo']}")
         else:
             msg = resp.message()
             msg.body("No se encontró información con este numero de telefono")
