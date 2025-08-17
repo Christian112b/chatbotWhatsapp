@@ -3,21 +3,6 @@ menu_bienvenida = (
     "¿Te interesa conocer precios, clases o inscribirte?"
 )
 
-saludos = [
-    "hola", "buenas", "buenos días", "buenas tardes", "buenas noches",
-    "hey", "qué tal", "saludos", "holi", "hello", "hi", "buen dia"
-]
-
-agradecimientos = [
-    "gracias", "muchas gracias", "mil gracias", "te agradezco",
-    "gracias por tu ayuda"
-]
-
-despedidas = [
-    "adiós", "nos vemos", "bye", "hasta luego",
-    "chau", "me voy", "saludos", "hasta mañana"
-]
-
 precio_keywords = [
     "cuesta", "precios", "tarifas", "costo", "mensualidad", "precio"
 ]

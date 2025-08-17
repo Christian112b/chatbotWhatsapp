@@ -4,6 +4,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 
 from functions.data import *
 from functions.validations import *
+from functions.sqlLite import dbClub
 
 load_dotenv()
 app = Flask(__name__)
@@ -35,16 +36,17 @@ def whatsapp_webhook():
 
     resp = MessagingResponse()
 
+    db = dbClub()
+    db.buscar_inscripcion(usuarios_estado[user_id]["Telefono"])    
+
+
+
     # DEV USE
     if incoming_msg.lower() == "reiniciar":
         msg = resp.message()
         msg.body("Reiniciando Estado")
         usuarios_estado[user_id]["estado"] = "Inicio"
-        msg2 = resp.message()
-        msg2.body(menu_bienvenida)
-
-
-
+    #--------------------------
 
     elif usuarios_estado[user_id]["Inscrito"] is False:
         if estado == "Inicio":
@@ -87,6 +89,12 @@ def whatsapp_webhook():
             msg.body(mensaje)
             usuarios_estado[user_id]["estado"] = nuevo_estado
 
+            telefono = usuarios_estado[user_id]["Telefono"]
+            nombre = usuarios_estado[user_id]["Nombre"]
+            plan = usuarios_estado[user_id]["Plan"]
+        
+            db.guardar_inscripcion(telefono, nombre, plan, True)
+
         else:
             msg = resp.message()
             msg.body("Reiniciando Estado")
@@ -96,7 +104,7 @@ def whatsapp_webhook():
 
     else:
         msg = resp.message()
-        msg.body("Reiniciando Estado con usuario inscrito")
+        msg.body("Bienvenido de nuevo")
         usuarios_estado[user_id]["estado"] = "Inicio"
         msg2 = resp.message()
         msg2.body(menu_bienvenida)

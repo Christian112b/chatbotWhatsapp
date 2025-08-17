@@ -62,8 +62,7 @@ def esperando_confirmacion(mensaje):
 
     if "confirmar" in mensaje:
         return """
-            ¡Perfecto! Tu inscripción ha sido confirmada.
-            "Si tienes alguna pregunta, no dudes en contactarnos.""", "Inicio"
+            ¡Perfecto! Tu inscripción ha sido confirmada. Si tienes alguna pregunta, no dudes en contactarnos.""", "Inicio"
     
     elif "cancelar" in mensaje:
         return """Tu inscripción ha sido cancelada. Si cambias de opinión, aquí estaremos.""", "Inicio"
