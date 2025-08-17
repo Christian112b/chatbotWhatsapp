@@ -7,13 +7,13 @@ def respuesta_menu_precio(mensaje):
         return menu_precios, "menu_precios"
     
     elif any(clase in mensaje for clase in clase_keywords):
-        return respuestas["respuesta_clases_inscripcion"], "menu_clase"
+        return "Esta respuesta es de clase", "menu_clase"
 
     elif any(insc in mensaje for insc in inscripcion_keywords):
-        return respuestas["respuesta_clases_inscripcion"], "menu_inscripcion"
+        return "Esta respuesta es de inscripción", "menu_inscripcion"
 
     else:
-        return "Lo siento, no entiendo tu solicitud, intentalo de nuevo.", 400
+        return "Lo siento, no entiendo tu solicitud, intentalo de nuevo.", "Inicio"
 
 def respuesta_confirmacion(mensaje):
     mensaje = mensaje.lower()
