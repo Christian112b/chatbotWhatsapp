@@ -29,8 +29,8 @@ def whatsapp_webhook():
     incoming_msg = request.values.get('Body', '').strip()
     user_id = request.values.get('From', '')
 
-    # if user_id not in usuarios_estado:
-    #     usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "inscrito": False}
+    if user_id not in usuarios_estado:
+        usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "inscrito": False}
     
     estado = usuarios_estado[user_id]["estado"]
     usuarios_estado[user_id]["telefono"] = limpiar_telefono(user_id)
@@ -50,9 +50,6 @@ def whatsapp_webhook():
     if incoming_msg.lower() == "reiniciar":
         msg, usuarios_estado = reiniciar_estado(user_id)
     #--------------------------
-
-
-
 
     elif usuarios_estado[user_id]["inscrito"]:
         msg = resp.message()
