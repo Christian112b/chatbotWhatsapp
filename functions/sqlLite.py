@@ -34,6 +34,22 @@ class dbClub:
         conn = sqlite3.connect(self.dbName)
         c = conn.cursor()
         c.execute("SELECT * FROM inscripciones WHERE telefono = ?", (telefono,))
-        resultado = c.fetchone()
+        resultado = c.fetchall()
         conn.close()
-        return resultado
+        
+        # Retornar valores
+        if len(resultado) > 0:
+            return {
+                "telefono": resultado[0][1],
+                "nombre": resultado[0][2],
+                "plan": resultado[0][3],
+                "inscrito": resultado[0][4]
+            }
+        return None
+
+    def limpiar_base(self):
+        conn = sqlite3.connect(self.dbName)
+        c = conn.cursor()
+        c.execute("DELETE * FROM inscripciones")
+        conn.commit()
+        conn.close()

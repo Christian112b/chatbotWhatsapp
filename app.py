@@ -29,26 +29,30 @@ def whatsapp_webhook():
     user_id = request.values.get('From', '')
 
     if user_id not in usuarios_estado:
-        usuarios_estado[user_id] = {"estado": "Inicio", "Nombre": None, "Plan": None, "Inscrito": False}
+        usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "inscrito": False}
     
     estado = usuarios_estado[user_id]["estado"]
     usuarios_estado[user_id]["Telefono"] = limpiar_telefono(user_id)
 
     resp = MessagingResponse()
 
+    # SQLObject
     db = dbClub()
-    db.buscar_inscripcion(usuarios_estado[user_id]["Telefono"])    
+    userdata = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])    
+
+    if userdata:
+        usuarios_estado[user_id]["nombre"] = userdata["nombre"]
+        usuarios_estado[user_id]["plan"] = userdata["plan"]
+        usuarios_estado[user_id]["inscrito"] = userdata["inscrito"]
 
 
-
-    # DEV USE
-    if incoming_msg.lower() == "reiniciar":
+    if usuarios_estado[user_id]["inscrito"]:
         msg = resp.message()
-        msg.body("Reiniciando Estado")
-        usuarios_estado[user_id]["estado"] = "Inicio"
-    #--------------------------
+        msg.body("Bienvenido de nuevo al club!")
+        usuarios_estado[user_id]["estado"] = "inicio_inscrito"
 
-    elif usuarios_estado[user_id]["Inscrito"] is False:
+
+    elif usuarios_estado[user_id]["inscrito"] is False:
         if estado == "Inicio":
             msg = resp.message()
             msg.body(menu_bienvenida)
@@ -71,16 +75,16 @@ def whatsapp_webhook():
             msg = resp.message()
             msg.body(mensaje)
             usuarios_estado[user_id]["estado"] = nuevo_estado
-            usuarios_estado[user_id]["Plan"] = num_plan
+            usuarios_estado[user_id]["plan"] = num_plan
 
         elif estado == "confirmacion":
-            plan = usuarios_estado[user_id]["Plan"]
-            telefono = usuarios_estado[user_id]["Telefono"]
+            plan = usuarios_estado[user_id]["plan"]
+            telefono = usuarios_estado[user_id]["telefono"]
             mensaje, nuevo_estado = confirmacion(incoming_msg, plan, telefono)
             msg = resp.message()
             msg.body(mensaje)
 
-            usuarios_estado[user_id]["Nombre"] = incoming_msg
+            usuarios_estado[user_id]["nombre"] = incoming_msg
             usuarios_estado[user_id]["estado"] = nuevo_estado
 
         elif estado == "esperando_confirmacion":
@@ -89,18 +93,23 @@ def whatsapp_webhook():
             msg.body(mensaje)
             usuarios_estado[user_id]["estado"] = nuevo_estado
 
-            telefono = usuarios_estado[user_id]["Telefono"]
-            nombre = usuarios_estado[user_id]["Nombre"]
-            plan = usuarios_estado[user_id]["Plan"]
-        
+            telefono = usuarios_estado[user_id]["telefono"]
+            nombre = usuarios_estado[user_id]["nombre"]
+            plan = usuarios_estado[user_id]["plan"]
+
             db.guardar_inscripcion(telefono, nombre, plan, True)
 
-        else:
-            msg = resp.message()
-            msg.body("Reiniciando Estado")
-            usuarios_estado[user_id]["estado"] = "Inicio"
-            msg2 = resp.message()
-            msg2.body(menu_bienvenida)
+    
+    # DEV USE
+    elif incoming_msg.lower() == "reiniciar":
+        msg = resp.message()
+        msg.body("Reiniciando Estado")
+        db.limpiar_base()
+        usuarios_estado[user_id]["estado"] = "Inicio"
+    #--------------------------
+
+    
+       
 
     else:
         msg = resp.message()
