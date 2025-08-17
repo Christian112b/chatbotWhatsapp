@@ -37,7 +37,7 @@ class dbClub:
         total = userdict['total']
         fecha_inscripcion = datetime.now().date()
         fecha_ultimo_pago = fecha_inscripcion
-        fecha_caducidad_pago = fecha_ultimo_pago + relativedelta(months=duracion)
+        fecha_caducidad_pago = fecha_ultimo_pago + relativedelta(months=int(duracion))
 
         conn = sqlite3.connect(self.dbName)
         c = conn.cursor()

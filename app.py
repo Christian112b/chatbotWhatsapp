@@ -135,7 +135,7 @@ def whatsapp_webhook():
     elif usuarios_estado[user_id]["estado"] == "confirmando_nombre":
         if incoming_msg.lower() == "sí" or incoming_msg.lower() == "si":
             msg = resp.message()
-            msg.body(f"¡Genial!. Ahora elige el plan que deseas.\n + {planes} \n\nResponde con el número del plan que prefieras.")
+            msg.body(f"¡Genial! Ahora elige el plan que deseas:\n\n" + "\n".join(planes) + "\n\nResponde con el número del plan que prefieras.")
 
             usuarios_estado[user_id]["estado"] = "validando_plan"
         else:
