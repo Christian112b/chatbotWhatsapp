@@ -29,7 +29,6 @@ class dbClub:
         conn.close()
 
     def guardar_inscripcion(self, userdict):
-
         telefono = userdict['telefono']
         nombre = userdict['nombre']
         plan = userdict['plan']
@@ -41,21 +40,29 @@ class dbClub:
 
         conn = sqlite3.connect(self.dbName)
         c = conn.cursor()
-        c.execute(
-            f'''INSERT INTO 
-                inscripciones 
-                    (telefono, 
-                    nombre, 
-                    plan, 
-                    duracion, 
-                    fecha_inscripcion,
-                    fecha_ultimo_pago,
-                    fecha_caducacidad_pago,
-                    cantidad_pago
-                    ) 
-                VALUES (?, ?, ?, ?)",
-                    {(telefono, nombre, plan, duracion, fecha_inscripcion, fecha_ultimo_pago, fecha_caducidad_pago, total)}
-        ''')
+
+        c.execute('''
+            INSERT INTO inscripciones (
+                telefono, 
+                nombre, 
+                plan, 
+                duracion, 
+                fecha_inscripcion,
+                fecha_ultimo_pago,
+                fecha_caducacidad_pago,
+                cantidad_pago
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            telefono,
+            nombre,
+            plan,
+            duracion,
+            fecha_inscripcion.isoformat(),       # Convertir a string
+            fecha_ultimo_pago.isoformat(),
+            fecha_caducidad_pago.isoformat(),
+            total
+        ))
+
         conn.commit()
         conn.close()
 
