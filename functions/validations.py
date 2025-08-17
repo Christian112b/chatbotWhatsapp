@@ -1,3 +1,4 @@
+import re
 from .data import *
 
 def limpiar_telefono(tel):
@@ -14,7 +15,7 @@ def respuesta_menu_precio(mensaje):
         return "Esta respuesta es de clase", "menu_clase"
 
     elif any(insc in mensaje for insc in inscripcion_keywords):
-        return "¡Excelente! Por favor indica el número del plan (1-3) parainiciar tu inscripción.", "menu_inscripcion"
+        return "¡Excelente! Por favor indica el número del plan (1-3) para iniciar tu inscripción.", "menu_inscripcion"
 
     else:
         return "Lo siento, no entiendo tu solicitud, intentalo de nuevo.", "Inicio"
