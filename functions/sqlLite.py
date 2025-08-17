@@ -20,7 +20,7 @@ class dbClub:
         conn.commit()
         conn.close()
 
-    def guardar_inscripcion(self, telefono, nombre, plan):
+    def guardar_inscripcion(self, telefono, nombre, plan, inscrito):
         conn = sqlite3.connect(self.dbName)
         c = conn.cursor()
         c.execute(
