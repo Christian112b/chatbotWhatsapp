@@ -38,21 +38,18 @@ def seleccion_plan(mensaje):
     if match:
         num_plan = int(match.group(1))
         if 1 <= num_plan <= len(planes):
-            return (
-                f"¡Perfecto! Has elegido el plan {num_plan}: {planes[num_plan-1]}\n"
-                "Por favor indícame tu nombre completo para finalizar la inscripción.",
-                "confirmacion", num_plan
-            )
+            return f"""
+                ¡Perfecto! Has elegido el plan {num_plan}: {planes[num_plan-1]}\n
+                Por favor indícame tu nombre completo para finalizar la inscripción.
+                """, "confirmacion", num_plan
+
         else:
-            return (
-                f"No existe el plan número {num_plan}. Por favor responde con un número entre 1 y {len(planes)}.",
-                "menu_inscripcion", None
-            )
+            return f"""
+                No existe el plan número {num_plan}. Por favor responde con un número entre 1 y {len(planes)}.""", "menu_inscripcion", None
+           
     else:
-        return (
-            f"No pude identificar el número del plan. Por favor responde solo con un número entre 1 y {len(planes)}.",
-            "menu_inscripcion", None
-        )
+        return f"""No pude identificar el número del plan. Por favor responde solo con un número entre 1 y {len(planes)}.""", "menu_inscripcion", None
+        
     
 def confirmacion(nombre, plan, telefono):
     
