@@ -50,6 +50,7 @@ def whatsapp_webhook():
 
     # DEV USE
     if incoming_msg.lower() == "reiniciar":
+        usuarios_estado.pop(user_id, None)
         msg, usuarios_estado = reiniciar_estado(user_id)
     #--------------------------
 
