@@ -61,7 +61,9 @@ def whatsapp_webhook():
 
 
 
-            
+
+
+
         # Opciones para gente ya inscrita y NO activa
         else:
             msg = resp.message()
@@ -82,80 +84,80 @@ def whatsapp_webhook():
 
 
 
-    # DEV USE
-    if incoming_msg.lower() == "reiniciar":
-        usuarios_estado.pop(user_id, None)
-        msg = reiniciar_estado(user_id)
+    # # DEV USE
+    # if incoming_msg.lower() == "reiniciar":
+    #     usuarios_estado.pop(user_id, None)
+    #     msg = reiniciar_estado(user_id)
     
-    elif incoming_msg.lower() == "consulta":
-        test = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])
-        if test:
-            msg = resp.message()
-            msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['activo']}")
-        else:
-            msg = resp.message()
-            msg.body("No se encontró información con este numero de telefono")
+    # elif incoming_msg.lower() == "consulta":
+    #     test = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])
+    #     if test:
+    #         msg = resp.message()
+    #         msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['activo']}")
+    #     else:
+    #         msg = resp.message()
+    #         msg.body("No se encontró información con este numero de telefono")
 
-    #--------------------------
+    # #--------------------------
 
-    elif usuarios_estado[user_id]["inscrito"]:
-        msg = resp.message()
-        msg.body("Bienvenido de nuevo al club!")
-        usuarios_estado[user_id]["estado"] = "inicio_inscrito"
+    # elif usuarios_estado[user_id]["inscrito"]:
+    #     msg = resp.message()
+    #     msg.body("Bienvenido de nuevo al club!")
+    #     usuarios_estado[user_id]["estado"] = "inicio_inscrito"
 
-    elif usuarios_estado[user_id]["inscrito"] is False:
-        if estado == "Inicio":
-            msg = resp.message()
-            msg.body(menu_bienvenida)
-            usuarios_estado[user_id]["estado"] = "esperando_en_menu"
+    # elif usuarios_estado[user_id]["inscrito"] is False:
+    #     if estado == "Inicio":
+    #         msg = resp.message()
+    #         msg.body(menu_bienvenida)
+    #         usuarios_estado[user_id]["estado"] = "esperando_en_menu"
 
-        elif estado == "esperando_en_menu":
-            mensaje, nuevo_estado = respuesta_menu_precio(incoming_msg)
-            msg = resp.message()
-            msg.body(mensaje)
-            usuarios_estado[user_id]["estado"] = nuevo_estado
+    #     elif estado == "esperando_en_menu":
+    #         mensaje, nuevo_estado = respuesta_menu_precio(incoming_msg)
+    #         msg = resp.message()
+    #         msg.body(mensaje)
+    #         usuarios_estado[user_id]["estado"] = nuevo_estado
 
-        elif estado == "menu_precios":
-            mensaje, nuevo_estado = respuesta_confirmacion(incoming_msg)
-            msg = resp.message()
-            msg.body(mensaje)
-            usuarios_estado[user_id]["estado"] = nuevo_estado
+    #     elif estado == "menu_precios":
+    #         mensaje, nuevo_estado = respuesta_confirmacion(incoming_msg)
+    #         msg = resp.message()
+    #         msg.body(mensaje)
+    #         usuarios_estado[user_id]["estado"] = nuevo_estado
 
-        elif estado == "menu_inscripcion":
-            mensaje, nuevo_estado, num_plan = seleccion_plan(incoming_msg)
-            msg = resp.message()
-            msg.body(mensaje)
-            usuarios_estado[user_id]["estado"] = nuevo_estado
-            usuarios_estado[user_id]["plan"] = num_plan
+    #     elif estado == "menu_inscripcion":
+    #         mensaje, nuevo_estado, num_plan = seleccion_plan(incoming_msg)
+    #         msg = resp.message()
+    #         msg.body(mensaje)
+    #         usuarios_estado[user_id]["estado"] = nuevo_estado
+    #         usuarios_estado[user_id]["plan"] = num_plan
 
-        elif estado == "confirmacion":
-            plan = usuarios_estado[user_id]["plan"]
-            telefono = usuarios_estado[user_id]["telefono"]
-            mensaje, nuevo_estado = confirmacion(incoming_msg, plan, telefono)
-            msg = resp.message()
-            msg.body(mensaje)
+    #     elif estado == "confirmacion":
+    #         plan = usuarios_estado[user_id]["plan"]
+    #         telefono = usuarios_estado[user_id]["telefono"]
+    #         mensaje, nuevo_estado = confirmacion(incoming_msg, plan, telefono)
+    #         msg = resp.message()
+    #         msg.body(mensaje)
 
-            usuarios_estado[user_id]["nombre"] = incoming_msg
-            usuarios_estado[user_id]["estado"] = nuevo_estado
+    #         usuarios_estado[user_id]["nombre"] = incoming_msg
+    #         usuarios_estado[user_id]["estado"] = nuevo_estado
 
-        elif estado == "esperando_confirmacion":
-            mensaje, nuevo_estado = esperando_confirmacion(incoming_msg)
-            msg = resp.message()
-            msg.body(mensaje)
-            usuarios_estado[user_id]["estado"] = nuevo_estado
+    #     elif estado == "esperando_confirmacion":
+    #         mensaje, nuevo_estado = esperando_confirmacion(incoming_msg)
+    #         msg = resp.message()
+    #         msg.body(mensaje)
+    #         usuarios_estado[user_id]["estado"] = nuevo_estado
 
-            telefono = usuarios_estado[user_id]["telefono"]
-            nombre = usuarios_estado[user_id]["nombre"]
-            plan = usuarios_estado[user_id]["plan"]
+    #         telefono = usuarios_estado[user_id]["telefono"]
+    #         nombre = usuarios_estado[user_id]["nombre"]
+    #         plan = usuarios_estado[user_id]["plan"]
 
-            db.guardar_inscripcion(telefono, nombre, plan, True)
+    #         db.guardar_inscripcion(telefono, nombre, plan, True)
 
-    else:
-        msg = resp.message()
-        msg.body("Bienvenido de nuevo")
-        usuarios_estado[user_id]["estado"] = "Inicio"
-        msg2 = resp.message()
-        msg2.body(menu_bienvenida)
+    # else:
+    #     msg = resp.message()
+    #     msg.body("Bienvenido de nuevo")
+    #     usuarios_estado[user_id]["estado"] = "Inicio"
+    #     msg2 = resp.message()
+    #     msg2.body(menu_bienvenida)
 
     return Response(str(resp), mimetype="application/xml", status=200)
 
