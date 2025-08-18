@@ -102,9 +102,21 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
         db.guardar_inscripcion(usuarios_estado[user_id])
         send_whapi_message(user_id, "¡Genial! Listo, ahora eres parte de nuestra comunidad.")
         usuarios_estado[user_id]["estado"] = "Inicio"
+        usuarios_estado[user_id]["activo"] = True
     else:
         usuarios_estado[user_id] = {"estado": "Inicio"}
         send_whapi_message(user_id, "Inscripción cancelada. ¿Cómo puedo ayudarte hoy?")
+
+def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
+    msg = incoming_msg.lower()
+
+    if msg == "plan":
+        send_whapi_message(user_id, f"📦 Tu plan actual es: {userdata['plan']}")
+    elif msg == "ayuda":
+        send_whapi_message(user_id, "🛠 Opciones disponibles:\n- 'plan': ver tu plan\n- 'estado': ver tu estado\n- 'reinicio': reiniciar todo")
+    else:
+        send_whapi_message(user_id, "🤖 No entendí eso. Escribe 'ayuda' para ver opciones.")
+
 
 def procesar_mensaje_whatsapp(user_id, incoming_msg):    
     db = dbClub()
@@ -121,7 +133,7 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
             "activo": False,
             "telefono": limpiar_telefono(user_id)
         }
-        send_whapi_message(user_id, "✅ Estado reiniciado. ¿Cómo puedo ayudarte hoy?")
+        send_whapi_message(user_id, "Estado reiniciado.")
         return  
 
     if incoming_msg.lower() == "estado":
@@ -157,3 +169,6 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
         manejar_validacion_inscripcion(user_id, incoming_msg)
     elif estado == "confirmando_inscripcion":
         manejar_confirmacion_inscripcion(user_id, incoming_msg, db)
+    elif estado == "inscrito":
+        manejar_usuario_inscrito(user_id, incoming_msg, userdata)
+
