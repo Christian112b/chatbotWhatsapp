@@ -164,9 +164,7 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     
     # send_whapi_message(user_id, f"Telefono: {usuarios_estado[user_id]['telefono']}")
     # send_whapi_message(user_id, f"Estado actual: {usuarios_estado[user_id]['estado']}")
-    
-    if manejar_consulta(user_id, incoming_msg, userdata): return
-    
+        
     estado = usuarios_estado[user_id]["estado"]
     print("Estado para depurar: ", estado)
 
