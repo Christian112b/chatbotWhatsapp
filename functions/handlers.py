@@ -147,6 +147,12 @@ def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
         send_whapi_message(user_id, f"Tu plan actual es: {userdata['plan']}")
     elif msg == "ayuda":
         send_whapi_message(user_id, "Opciones disponibles:\n- 'plan': ver tu plan\n- 'estado': ver tu estado\n- 'reinicio': reiniciar todo")
+    elif msg == "caducidad":
+        send_whapi_message(user_id, f"Tu plan caduca el: {userdata['fecha_caducidad_pago']}")
+    elif msg == "reinicio":
+        send_whapi_message(user_id, "Reiniciando tu estado...")
+        usuarios_estado[user_id]["estado"] = "Inicio"
+
     else:
         send_whapi_message(user_id, "No entendí eso. Escribe 'ayuda' para ver opciones.")
 
