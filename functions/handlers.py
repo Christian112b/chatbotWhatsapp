@@ -157,7 +157,7 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     inicializar_estado(user_id)
 
     telefono = usuarios_estado[user_id]["telefono"]
-    userdata = db.buscar_inscripcion(telefono)
+    
 
     # if manejar_comando_reiniciar(user_id, incoming_msg, db): return
     # if manejar_consulta(user_id, incoming_msg, userdata): return
