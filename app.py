@@ -47,7 +47,7 @@ def whatsapp_webhook():
     if userdata is not None:
         usuarios_estado[user_id]["nombre"] = userdata["nombre"]
         usuarios_estado[user_id]["plan"] = userdata["plan"]
-        usuarios_estado[user_id]["activo"] = userdata["activo"]
+        # usuarios_estado[user_id]["activo"] = userdata["activo"]
 
         # Opciones para gente ya inscrita y activa
         if usuarios_estado[user_id]["activo"] == 1 and usuarios_estado[user_id]["estado"] != "menu_inscrito":
