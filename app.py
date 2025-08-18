@@ -40,6 +40,9 @@ def whatsapp_webhook():
     data = request.json
     print("[Webhook recibido]", json.dumps(data, indent=2))
 
+    send_whapi_message(user_id, "Prueba de mensaje recibido")
+
+
     return "OK", 200
 
 
