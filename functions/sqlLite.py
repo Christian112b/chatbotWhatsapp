@@ -115,3 +115,18 @@ class dbClub:
         """)
         conn.commit()
         conn.close()
+
+    def agregar_pregunta(pregunta, respuesta):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO preguntas_frecuentes (pregunta, respuesta) VALUES (?, ?)", (pregunta, respuesta))
+        conn.commit()
+        conn.close()
+
+    def obtener_preguntas():
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT pregunta, respuesta FROM preguntas_frecuentes ORDER BY id DESC")
+        datos = cursor.fetchall()
+        conn.close()
+        return datos

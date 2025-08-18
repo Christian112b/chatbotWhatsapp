@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask, request
 
 from functions.handlers import *
+from functions.sqlLite import dbClub    
 
 load_dotenv()
 app = Flask(__name__)
@@ -38,8 +39,11 @@ def whatsapp_webhook():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+
+    db = dbClub()
+
     if request.method == 'POST':
-        agregar_pregunta(request.form['pregunta'], request.form['respuesta'])
+        db.agregar_pregunta(request.form['pregunta'], request.form['respuesta'])
         return redirect('/')
     preguntas = obtener_preguntas()
     return render_template('index.html', preguntas=preguntas)
