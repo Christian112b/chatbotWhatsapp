@@ -29,6 +29,9 @@ usuarios_estado = {}
 
 @app.route("/webhook", methods=['POST'])
 def whatsapp_webhook():
+
+    data = request.get_json()
+
     incoming_msg = data.get('message', {}).get('body', '').strip()
     user_id = data.get('from', '').strip()
 
