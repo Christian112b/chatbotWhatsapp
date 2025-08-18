@@ -106,12 +106,33 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
         usuarios_estado[user_id] = {"estado": "Inicio"}
         send_whapi_message(user_id, "Inscripción cancelada. ¿Cómo puedo ayudarte hoy?")
 
-def procesar_mensaje_whatsapp(user_id, incoming_msg):
+def procesar_mensaje_whatsapp(user_id, incoming_msg):    
     db = dbClub()
     inicializar_estado(user_id)
 
     telefono = usuarios_estado[user_id]["telefono"]
     userdata = db.buscar_inscripcion(telefono)
+
+    if incoming_msg.lower() == "reinicio":
+        usuarios_estado[user_id] = {
+            "estado": "Inicio",
+            "nombre": None,
+            "plan": None,
+            "activo": False,
+            "telefono": limpiar_telefono(user_id)
+        }
+        send_whapi_message(user_id, "✅ Estado reiniciado. ¿Cómo puedo ayudarte hoy?")
+        return  
+
+    if incoming_msg.lower() == "estado":
+        estado = usuarios_estado.get(user_id, {}).get("estado", "Sin estado")
+        nombre = usuarios_estado.get(user_id, {}).get("nombre", "No definido")
+        plan = usuarios_estado.get(user_id, {}).get("plan", "No definido")
+        activo = usuarios_estado.get(user_id, {}).get("activo", "No definido")
+
+        mensaje = f"📍 Estado actual:\n- Estado: {estado}\n- Nombre: {nombre}\n- Plan: {plan}\n- Activo: {activo}"
+        send_whapi_message(user_id, mensaje)
+        return  
 
     if manejar_comando_reiniciar(user_id, incoming_msg, db): return
     if manejar_consulta(user_id, incoming_msg, userdata): return

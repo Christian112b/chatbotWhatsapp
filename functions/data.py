@@ -1,5 +1,5 @@
 menu_bienvenida = (
-    "Hola, gracias por escribir al Club Deportivo. ¿Qué te interesa saber: precios, clases o cómo inscribirte?"
+    "Hola, gracias por escribir al Club Deportivo. ¿Qué te interesa inscribirte o visitar las preguntas frecuentes?"
 )
 
 menu_no_inscritos = (
