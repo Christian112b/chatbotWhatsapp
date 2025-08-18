@@ -118,11 +118,10 @@ def manejar_preguntas_frecuentes(user_id, incoming_msg):
 
     # Mostrar lista si el mensaje coincide con los comandos
     if msg in pregunta_keywords:
-        lista = "\n".join([f"- {pregunta}" for pregunta, _ in preguntas_respuestas])
-        mensaje = f"Estas son las preguntas frecuentes disponibles:\n{lista}\n\nEscribe una de ellas para ver la respuesta."
+        lista = "\n".join([f"- {pregunta}\n  {respuesta}" for pregunta, respuesta in preguntas_respuestas])
+        mensaje = f"Estas son las preguntas frecuentes disponibles:\n\n{lista}"
         send_whapi_message(user_id, mensaje)
-        return True
-    return False
+    return True
 
 
 
