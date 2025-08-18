@@ -15,17 +15,6 @@ app = Flask(__name__)
 
 # Diccionario para almacenar el estado de cada usuario
 usuarios_estado = {}
-"""
-    usuarios_estados = {
-        user_id: {
-            estado: "Inicio",
-            telefono: "123-456",
-            nombre: "Nombre",
-            plan: "Plan de club",
-            inscrito: False
-        }
-    }
-"""
 
 @app.route("/webhook", methods=["POST"])
 def whatsapp_webhook():
@@ -33,29 +22,33 @@ def whatsapp_webhook():
     event_type = data.get("event", {}).get("type")
 
     if event_type != "messages":
-        print(f"[Ignorado] Evento tipo '{event_type}' no requiere respuesta.")
         return "OK", 200
 
     message = data["messages"][0]
 
     # Ignorar mensajes enviados por el bot
     if message.get("from_me", False):
-        print("[Ignorado] Mensaje enviado por el bot.")
         return "OK", 200
 
     incoming_msg = message.get("text", {}).get("body", "")
     user_id = message.get("from")
 
+    # Validar mensaje y número de usuario
     if not incoming_msg or not user_id:
-        print("[Error] Mensaje o número inválido.")
         return "OK", 200
 
     print(f"[Webhook recibido] Mensaje: {incoming_msg} | De: {user_id}")
-    status, response_text = send_whapi_message(user_id, f"Recibido: {incoming_msg}")
-    print(f"[Whapi] Estado: {status} | Respuesta: {response_text}")
+    procesar_mensaje_whatsapp(user_id, incoming_msg)
     return "OK", 200
 
 
+
+
+    return "OK", 200
+
+
+# @app.route("/webhook", methods=["POST"])
+    
 
     # global usuarios_estado
 
