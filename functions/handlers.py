@@ -114,7 +114,7 @@ def manejar_preguntas_frecuentes(user_id, incoming_msg):
     pregunta_keywords = ["faq", "preguntas", "frecuentes"]
     msg = incoming_msg.lower().strip()
 
-    preguntas_respuestas = dbClub.obtener_preguntas()
+    preguntas_respuestas = db.obtener_preguntas()
 
     # Mostrar lista si el mensaje coincide con los comandos
     if msg in pregunta_keywords:
