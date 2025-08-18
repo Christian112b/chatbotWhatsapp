@@ -79,7 +79,12 @@ class dbClub:
                 "telefono": resultado[0][1],
                 "nombre": resultado[0][2],
                 "plan": resultado[0][3],
-                "duracion": resultado[0][4]
+                "duracion": resultado[0][4],
+                "fecha_inscripcion": resultado[0][5],
+                "fecha_ultimo_pago": resultado[0][6],
+                "fecha_caducidad_pago": resultado[0][6],
+                "activo": 1 if resultado[0][6] >= datetime.now().date() else 0,
+                "cantidad_pago": resultado[0][7]
             }
         return None
 
