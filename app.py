@@ -32,12 +32,17 @@ def whatsapp_webhook():
     data = request.get_json()
     event_type = data.get("event", {}).get("type")
 
-    # Solo procesar eventos de tipo "messages"
     if event_type != "messages":
         print(f"[Ignorado] Evento tipo '{event_type}' no requiere respuesta.")
         return "OK", 200
 
     message = data["messages"][0]
+
+    # Ignorar mensajes enviados por el bot
+    if message.get("from_me", False):
+        print("[Ignorado] Mensaje enviado por el bot.")
+        return "OK", 200
+
     incoming_msg = message.get("text", {}).get("body", "")
     user_id = message.get("from")
 
@@ -48,7 +53,7 @@ def whatsapp_webhook():
     print(f"[Webhook recibido] Mensaje: {incoming_msg} | De: {user_id}")
     status, response_text = send_whapi_message(user_id, f"Recibido: {incoming_msg}")
     print(f"[Whapi] Estado: {status} | Respuesta: {response_text}")
-    return "OK", 200
+    return "OK", 
 
 
 
