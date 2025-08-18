@@ -9,7 +9,7 @@ def send_whapi_message(to, message):
     }
     payload = {
         "to": to.replace("whatsapp:", "").replace("+", ""),
-        "text": message
+        "body": message
     }
 
     response = requests.post(url, headers=headers, json=payload)
