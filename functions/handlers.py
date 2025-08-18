@@ -1,8 +1,8 @@
 from functions.sqlLite import * 
 
-from twilio.twiml.messaging_response import MessagingResponse
-
-db = dbClub()
+from functions.data import *
+from functions.handlers import *
+from functions.validations import *
 
 def reiniciar_estado(user_id):
     resp = MessagingResponse()

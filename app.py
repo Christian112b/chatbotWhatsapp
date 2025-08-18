@@ -1,13 +1,8 @@
 import json
 
 from dotenv import load_dotenv
-from flask import Flask, request, Response
-from twilio.twiml.messaging_response import MessagingResponse
+from flask import Flask, request
 
-from functions.data import *
-from functions.handlers import *
-from functions.validations import *
-from functions.sqlLite import dbClub
 from functions.whapi import send_whapi_message
 
 load_dotenv()
@@ -40,12 +35,6 @@ def whatsapp_webhook():
     print(f"[Webhook recibido] Mensaje: {incoming_msg} | De: {user_id}")
     procesar_mensaje_whatsapp(user_id, incoming_msg)
     return "OK", 200
-
-
-
-
-    return "OK", 200
-
 
 # @app.route("/webhook", methods=["POST"])
     
