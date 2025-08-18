@@ -1,13 +1,14 @@
 import json
 
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask, request, redirect, render_template
 
 from functions.handlers import *
 from functions.sqlLite import dbClub    
 
 load_dotenv()
 app = Flask(__name__)
+db = dbClub()
 
 # Diccionario para almacenar el estado de cada usuario
 usuarios_estado = {}
@@ -40,12 +41,10 @@ def whatsapp_webhook():
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
-    db = dbClub()
-
     if request.method == 'POST':
         db.agregar_pregunta(request.form['pregunta'], request.form['respuesta'])
         return redirect('/')
-    preguntas = obtener_preguntas()
+    preguntas = db.obtener_preguntas()
     return render_template('index.html', preguntas=preguntas)
 
 

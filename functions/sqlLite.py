@@ -74,17 +74,19 @@ class dbClub:
         resultado = c.fetchall()
         conn.close()
         
-        # Retornar valores
         if len(resultado) > 0:
+            fecha_pago_str = resultado[0][6]
+            fecha_pago = datetime.strptime(fecha_pago_str, "%Y-%m-%d").date()
+
             return {
                 "telefono": resultado[0][1],
                 "nombre": resultado[0][2],
                 "plan": resultado[0][3],
                 "duracion": resultado[0][4],
                 "fecha_inscripcion": resultado[0][5],
-                "fecha_ultimo_pago": resultado[0][6],
-                "fecha_caducidad_pago": resultado[0][6],
-                "activo": 1 if resultado[0][6] >= datetime.now().date() else 0,
+                "fecha_ultimo_pago": fecha_pago_str,
+                "fecha_caducidad_pago": fecha_pago_str,
+                "activo": 1 if fecha_pago >= datetime.now().date() else 0,
                 "cantidad_pago": resultado[0][7]
             }
         return None
@@ -116,17 +118,24 @@ class dbClub:
         conn.commit()
         conn.close()
 
-    def agregar_pregunta(pregunta, respuesta):
-        conn = sqlite3.connect(DB_PATH)
+    def agregar_pregunta(self, pregunta, respuesta):
+        conn = sqlite3.connect(self.dbName)
         cursor = conn.cursor()
         cursor.execute("INSERT INTO preguntas_frecuentes (pregunta, respuesta) VALUES (?, ?)", (pregunta, respuesta))
         conn.commit()
         conn.close()
 
-    def obtener_preguntas():
-        conn = sqlite3.connect(DB_PATH)
+    def obtener_preguntas(self):
+        conn = sqlite3.connect(self.dbName)
         cursor = conn.cursor()
         cursor.execute("SELECT pregunta, respuesta FROM preguntas_frecuentes ORDER BY id DESC")
         datos = cursor.fetchall()
         conn.close()
         return datos
+
+    def eliminar_pregunta(self, pregunta_id):
+        conn = sqlite3.connect(self.dbName)
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM preguntas_frecuentes WHERE id = ?", (pregunta_id,))
+        conn.commit()
+        conn.close()
