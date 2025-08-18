@@ -9,6 +9,7 @@ class dbClub:
         self.dbName = 'club.db'
         self.create_Table()
         self.crear_tabla_preguntas()
+        self.tabla_log_actividad()
 
     def create_Table(self):
         conn = sqlite3.connect(self.dbName)
@@ -137,5 +138,25 @@ class dbClub:
         conn = sqlite3.connect(self.dbName)
         cursor = conn.cursor()
         cursor.execute("DELETE FROM preguntas_frecuentes WHERE id = ?", (pregunta_id,))
+        conn.commit()
+        conn.close()
+
+    def tabla_log_actividad(self):
+        conn = sqlite3.connect(self.dbName)
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS log_actividad (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id TEXT NOT NULL,
+                fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        conn.commit()
+        conn.close()
+
+    def registrar_actividad(self, user_id):
+        conn = sqlite3.connect(self.dbName)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO log_actividad (user_id) VALUES (?)", (user_id,))
         conn.commit()
         conn.close()

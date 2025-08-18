@@ -18,6 +18,8 @@ def whatsapp_webhook():
     data = request.get_json()
     event_type = data.get("event", {}).get("type")
 
+    db.registrar_actividad(user_id)
+
     if event_type != "messages":
         return "OK", 200
 
