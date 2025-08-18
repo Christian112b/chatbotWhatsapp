@@ -18,11 +18,23 @@ def inicializar_estado(user_id):
             "telefono": limpiar_telefono(user_id)
         }
 
-def manejar_comando_reiniciar(user_id, incoming_msg, db):
-    if incoming_msg.lower() == "reiniciar":
-        usuarios_estado[user_id] = {"estado": "Inicio"}
-        db.borrar_tabla()
-        send_whapi_message(user_id, "Estado reiniciado. ¿Cómo puedo ayudarte hoy?")
+def manejar_comando_reiniciar(user_id, msg, db=None):
+    if msg.lower() == "reiniciar":
+        usuarios_estado[user_id] = {
+            "estado": "Inicio",
+            "nombre": None,
+            "plan": None,
+            "activo": False,
+            "telefono": limpiar_telefono(user_id)
+        }
+
+        
+        # if db:
+        #     telefono = usuarios_estado[user_id]["telefono"]
+        #     db.eliminar_inscripcion(telefono)  
+
+        send_whapi_message(user_id, "Bot reiniciado.")
+        send_whapi_message(user_id, menu_bienvenida)
         return True
     return False
 
@@ -144,6 +156,7 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     userdata = db.buscar_inscripcion(telefono)
 
     if manejar_comando_reiniciar(user_id, incoming_msg, db): return
+
     if manejar_consulta(user_id, incoming_msg, userdata): return
     if manejar_preguntas_frecuentes(user_id, incoming_msg): return
     
