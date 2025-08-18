@@ -105,6 +105,10 @@ def manejar_validacion_inscripcion(user_id, incoming_msg):
     duracion = incoming_msg
     plan = usuarios_estado[user_id]["plan"]
     total = calcular_total(plan, duracion)
+
+    duracion_meses = ["1 mes", "3 meses", "6 meses", "9 meses", "12 meses"]
+    duracion = duracion_meses[int(duracion) - 1] if duracion.isdigit() and 1 <= int(duracion) <= 5 else "1 mes"
+
     usuarios_estado[user_id]["duracion"] = duracion
     usuarios_estado[user_id]["total"] = total
     usuarios_estado[user_id]["estado"] = "confirmando_inscripcion"
@@ -115,6 +119,7 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
     if incoming_msg.lower() in ["sí", "si"]:
         db.guardar_inscripcion(usuarios_estado[user_id])
         send_whapi_message(user_id, "¡Genial! Listo, ahora eres parte de nuestra comunidad.")
+        send_whapi_message(user_id, "Opciones disponibles:\n- 'plan': ver tu plan\n- 'estado': ver tu estado\n- 'reinicio': reiniciar todo")
         usuarios_estado[user_id]["estado"] = "Inscrito"
         usuarios_estado[user_id]["activo"] = True
     else:
@@ -133,6 +138,7 @@ def manejar_preguntas_frecuentes(user_id, incoming_msg):
         lista = "\n".join([f"- {pregunta}\n  {respuesta}" for pregunta, respuesta in preguntas_respuestas])
         mensaje = f"Estas son las preguntas frecuentes disponibles:\n\n{lista}"
         send_whapi_message(user_id, mensaje)
+        send_whapi_message(user_id, menu_bienvenida_2)
 
         # Reiniciar el estado del usuario a "Inicio"
         usuarios_estado[user_id]["estado"] = "Inicio"
@@ -151,6 +157,7 @@ def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
         send_whapi_message(user_id, f"Tu plan caduca el: {userdata['fecha_caducidad_pago']}")
     elif msg == "reinicio":
         send_whapi_message(user_id, "Reiniciando tu estado...")
+        send_whapi_message(user_id, menu_bienvenida)
         usuarios_estado[user_id]["estado"] = "Inicio"
 
     else:
