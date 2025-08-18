@@ -136,8 +136,8 @@ def manejar_preguntas_frecuentes(user_id, incoming_msg):
 
         # Reiniciar el estado del usuario a "Inicio"
         usuarios_estado[user_id] = {"estado": "Inicio"}
-
-    return True
+        return True
+    return False
 
 def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
     msg = incoming_msg.lower()
