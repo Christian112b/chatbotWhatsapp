@@ -8,6 +8,13 @@ def send_whapi_message(to, message):
     if not is_valid_whapi_number(to_clean):
         print(f"[ERROR] Número inválido: {to_clean}")
         return 400, "Número inválido"
+    
+    WHAPI_URL = "https://gate.whapi.cloud/messages/text"
+
+    HEADERS = {
+        "Authorization": f"Bearer {os.environ.get('WHAPI_TOKEN')}",
+        "Content-Type": "application/json"
+    }
 
     payload = {
         "to": to_clean,
