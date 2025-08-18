@@ -120,6 +120,6 @@ preguntas_frecuentes = {
     "¿cómo contacto al club?": "Puedes escribirnos por WhatsApp."
 }
 
-pregunta_keywords = ["faq", "preguntas", "frecuentes"]
+pregunta_keywords = ["faq", "preguntas", "frecuentes", "preguntas frecuentes"]
 
 mensaje_advertencia = ("Este bot esta en construccion, si se reciben fallas, como si no responde o se detiene, por favor escribe 'reiniciar' para empezar de 0.")

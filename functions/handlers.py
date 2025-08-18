@@ -118,7 +118,7 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
         usuarios_estado[user_id]["estado"] = "Inscrito"
         usuarios_estado[user_id]["activo"] = True
     else:
-        usuarios_estado[user_id] = {"estado": "Inicio"}
+        usuarios_estado[user_id]["estado"] = "Inicio"
         send_whapi_message(user_id, "Inscripción cancelada. ¿Cómo puedo ayudarte hoy?")
 
 
@@ -135,7 +135,8 @@ def manejar_preguntas_frecuentes(user_id, incoming_msg):
         send_whapi_message(user_id, mensaje)
 
         # Reiniciar el estado del usuario a "Inicio"
-        usuarios_estado[user_id] = {"estado": "Inicio"}
+        usuarios_estado[user_id]["estado"] = "Inicio"
+
         return True
     return False
 
