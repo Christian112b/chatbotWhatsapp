@@ -36,6 +36,15 @@ def whatsapp_webhook():
     procesar_mensaje_whatsapp(user_id, incoming_msg)
     return "OK", 200
 
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        agregar_pregunta(request.form['pregunta'], request.form['respuesta'])
+        return redirect('/')
+    preguntas = obtener_preguntas()
+    return render_template('index.html', preguntas=preguntas)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
 

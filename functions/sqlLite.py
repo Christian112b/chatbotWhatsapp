@@ -8,6 +8,7 @@ class dbClub:
     def __init__(self):
         self.dbName = 'club.db'
         self.create_Table()
+        self.crear_tabla_preguntas()
 
     def create_Table(self):
         conn = sqlite3.connect(self.dbName)
@@ -99,5 +100,18 @@ class dbClub:
         conn = sqlite3.connect(self.dbName)
         c = conn.cursor()
         c.execute("DROP TABLE IF EXISTS inscripciones")
+        conn.commit()
+        conn.close()
+
+    def crear_tabla_preguntas(self):
+        conn = sqlite3.connect(self.dbName)
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS preguntas_frecuentes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                pregunta TEXT NOT NULL,
+                respuesta TEXT NOT NULL
+            )
+        """)
         conn.commit()
         conn.close()

@@ -109,7 +109,7 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
 
 
 def manejar_preguntas_frecuentes(user_id, incoming_msg):
-    if any(keyword in incoming_msg.lower() for keyword in pregunta_keywords()):
+    if any(keyword in incoming_msg.lower() for keyword in pregunta_keywords):
         msg = incoming_msg.lower().strip()
         respuesta = preguntas_frecuentes.get(msg)
         if respuesta:
