@@ -160,9 +160,9 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     
     # userdata = db.buscar_inscripcion(telefono)
 
-    if manejar_comando_reiniciar(user_id, incoming_msg, db): return
+    # if manejar_comando_reiniciar(user_id, incoming_msg, db): return
     # if manejar_consulta(user_id, incoming_msg, userdata): return
-    if manejar_preguntas_frecuentes(user_id, incoming_msg): return
+    # if manejar_preguntas_frecuentes(user_id, incoming_msg): return
     
     estado = usuarios_estado[user_id]["estado"]
     print("Estado para depurar: ", estado)
@@ -188,6 +188,8 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
         manejar_validacion_inscripcion(user_id, incoming_msg)
     elif estado == "confirmando_inscripcion":
         manejar_confirmacion_inscripcion(user_id, incoming_msg, db)
+    else:
+        send_whapi_message(user_id, "Lo siento, no entendí eso.")
 
         
 
