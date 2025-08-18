@@ -2,7 +2,7 @@ import requests
 import os
 
 def send_whapi_message(to, message):
-    url = "https://gate.whapi.cloud/messages"
+    url = "https://gate.whapi.cloud/messages/text"
     headers = {
         "Authorization": f"Bearer {os.environ.get('WHAPI_TOKEN')}",
         "Content-Type": "application/json"

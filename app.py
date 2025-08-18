@@ -33,7 +33,7 @@ def whatsapp_webhook():
     print("[Webhook recibido]", json.dumps(data, indent=2))
 
     incoming_msg = data.get('message', {}).get('body', '').strip()
-    user_id = data.get('from', '').strip()
+    user_id = data.get('messages', [{}])[0].get('from', '').strip()
 
     print(f"Numero de usuario: {user_id}")
 
