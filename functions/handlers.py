@@ -1,7 +1,6 @@
 from functions.sqlLite import * 
 
 from functions.data import *
-from functions.handlers import *
 from functions.validations import *
 
 def reiniciar_estado(user_id):
