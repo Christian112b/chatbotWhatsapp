@@ -101,7 +101,7 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
     if incoming_msg.lower() in ["sí", "si"]:
         db.guardar_inscripcion(usuarios_estado[user_id])
         send_whapi_message(user_id, "¡Genial! Listo, ahora eres parte de nuestra comunidad.")
-        usuarios_estado[user_id]["estado"] = "prueba"
+        usuarios_estado[user_id]["estado"] = "Inicio"
     else:
         usuarios_estado[user_id] = {"estado": "Inicio"}
         send_whapi_message(user_id, "Inscripción cancelada. ¿Cómo puedo ayudarte hoy?")
