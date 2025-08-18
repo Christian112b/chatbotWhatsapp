@@ -22,7 +22,7 @@ def whatsapp_webhook():
         return "OK", 200
 
     message = data["messages"][0]
-
+    
     # Ignorar mensajes enviados por el bot
     if message.get("from_me", False):
         return "OK", 200

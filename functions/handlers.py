@@ -150,11 +150,15 @@ def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
     else:
         send_whapi_message(user_id, "No entendí eso. Escribe 'ayuda' para ver opciones.")
 
-def procesar_mensaje_whatsapp(user_id, incoming_msg):    
+def procesar_mensaje_whatsapp(user_id, incoming_msg): 
+
+    print(f"Procesando mensaje de {user_id}: {incoming_msg}")
+
     inicializar_estado(user_id)
 
     telefono = usuarios_estado[user_id]["telefono"]
-    userdata = db.buscar_inscripcion(telefono)
+    
+    # userdata = db.buscar_inscripcion(telefono)
 
     if manejar_comando_reiniciar(user_id, incoming_msg, db): return
     # if manejar_consulta(user_id, incoming_msg, userdata): return
