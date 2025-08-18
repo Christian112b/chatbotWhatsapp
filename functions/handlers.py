@@ -5,6 +5,8 @@ from functions.validations import *
 from functions.whapi import *
 
 usuarios_estado = {}
+db = dbClub()
+
 
 def inicializar_estado(user_id):
     if user_id not in usuarios_estado:
@@ -109,13 +111,20 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
 
 
 def manejar_preguntas_frecuentes(user_id, incoming_msg):
-    if any(keyword in incoming_msg.lower() for keyword in pregunta_keywords):
-        msg = incoming_msg.lower().strip()
-        respuesta = preguntas_frecuentes.get(msg)
-        if respuesta:
-            send_whapi_message(user_id, respuesta)
-            return True
+    pregunta_keywords = ["faq", "preguntas", "frecuentes"]
+    msg = incoming_msg.lower().strip()
+
+    preguntas_respuestas = dbClub.obtener_preguntas()
+
+    # Mostrar lista si el mensaje coincide con los comandos
+    if msg in pregunta_keywords:
+        lista = "\n".join([f"- {pregunta}" for pregunta, _ in preguntas_respuestas])
+        mensaje = f"Estas son las preguntas frecuentes disponibles:\n{lista}\n\nEscribe una de ellas para ver la respuesta."
+        send_whapi_message(user_id, mensaje)
+        return True
     return False
+
+
 
 def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
     msg = incoming_msg.lower()
@@ -128,7 +137,6 @@ def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
         send_whapi_message(user_id, "No entendí eso. Escribe 'ayuda' para ver opciones.")
 
 def procesar_mensaje_whatsapp(user_id, incoming_msg):    
-    db = dbClub()
     inicializar_estado(user_id)
 
     telefono = usuarios_estado[user_id]["telefono"]
