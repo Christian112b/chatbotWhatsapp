@@ -117,6 +117,7 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     if manejar_consulta(user_id, incoming_msg, userdata): return
 
     estado = usuarios_estado[user_id]["estado"]
+    print("Estado para depurar: ", estado)
 
     if userdata:
         manejar_usuario_inscrito(user_id, incoming_msg, userdata)
