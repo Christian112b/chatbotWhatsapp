@@ -15,6 +15,7 @@ def inicializar_estado(user_id):
             "nombre": None,
             "plan": None,
             "activo": False,
+            "inscrito": False,
             "telefono": limpiar_telefono(user_id)
         }
 
@@ -156,8 +157,7 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     userdata = db.buscar_inscripcion(telefono)
 
     if manejar_comando_reiniciar(user_id, incoming_msg, db): return
-
-    if manejar_consulta(user_id, incoming_msg, userdata): return
+    # if manejar_consulta(user_id, incoming_msg, userdata): return
     if manejar_preguntas_frecuentes(user_id, incoming_msg): return
     
     estado = usuarios_estado[user_id]["estado"]
