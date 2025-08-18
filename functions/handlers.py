@@ -121,9 +121,11 @@ def manejar_preguntas_frecuentes(user_id, incoming_msg):
         lista = "\n".join([f"- {pregunta}\n  {respuesta}" for pregunta, respuesta in preguntas_respuestas])
         mensaje = f"Estas son las preguntas frecuentes disponibles:\n\n{lista}"
         send_whapi_message(user_id, mensaje)
+
+        # Reiniciar el estado del usuario a "Inicio"
+        usuarios_estado[user_id] = {"estado": "Inicio"}
+
     return True
-
-
 
 def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
     msg = incoming_msg.lower()
@@ -152,11 +154,11 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
         telefono = usuarios_estado[user_id]["telefono"]
         userdata = db.buscar_inscripcion(telefono)
         manejar_usuario_inscrito(user_id, incoming_msg, userdata)
-    elif userdata:
-        manejar_usuario_inscrito(user_id, incoming_msg, userdata)
     elif estado == "Inicio":
         send_whapi_message(user_id, menu_bienvenida)
         usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
+    elif userdata:
+        manejar_usuario_inscrito(user_id, incoming_msg, userdata)
     elif estado == "menu_no_inscrito":
         manejar_menu_no_inscrito(user_id, incoming_msg)
     elif estado == "validando_nombre":
