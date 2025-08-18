@@ -101,7 +101,7 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
     if incoming_msg.lower() in ["sí", "si"]:
         db.guardar_inscripcion(usuarios_estado[user_id])
         send_whapi_message(user_id, "¡Genial! Listo, ahora eres parte de nuestra comunidad.")
-        usuarios_estado[user_id]["estado"] = "Inicio"
+        usuarios_estado[user_id]["estado"] = "Inscrito"
         usuarios_estado[user_id]["activo"] = True
     else:
         usuarios_estado[user_id] = {"estado": "Inicio"}
@@ -170,5 +170,7 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     elif estado == "confirmando_inscripcion":
         manejar_confirmacion_inscripcion(user_id, incoming_msg, db)
     elif estado == "inscrito":
+        telefono = usuarios_estado[user_id]["telefono"]
+        userdata = db.buscar_inscripcion(telefono)
         manejar_usuario_inscrito(user_id, incoming_msg, userdata)
 
