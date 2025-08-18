@@ -155,44 +155,44 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
 
     inicializar_estado(user_id)
 
-    send_whapi_message(user_id, "Test Funcion")
+    # send_whapi_message(user_id, "Test Funcion")
 
     telefono = usuarios_estado[user_id]["telefono"]
     
     if manejar_comando_reiniciar(user_id, incoming_msg, db): return
     if manejar_preguntas_frecuentes(user_id, incoming_msg): return
     
-    send_whapi_message(user_id, f"Telefono: {usuarios_estado[user_id]['telefono']}")
-    send_whapi_message(user_id, f"Estado actual: {usuarios_estado[user_id]['estado']}")
+    # send_whapi_message(user_id, f"Telefono: {usuarios_estado[user_id]['telefono']}")
+    # send_whapi_message(user_id, f"Estado actual: {usuarios_estado[user_id]['estado']}")
     
-    # if manejar_consulta(user_id, incoming_msg, userdata): return
+    if manejar_consulta(user_id, incoming_msg, userdata): return
     
-    # estado = usuarios_estado[user_id]["estado"]
-    # print("Estado para depurar: ", estado)
+    estado = usuarios_estado[user_id]["estado"]
+    print("Estado para depurar: ", estado)
 
-    # if estado == "Inicio":
-    #     send_whapi_message(user_id, menu_bienvenida)
-    #     usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
-    # elif estado == "inscrito":
-    #     telefono = usuarios_estado[user_id]["telefono"]
-    #     userdata = db.buscar_inscripcion(telefono)
-    #     manejar_usuario_inscrito(user_id, incoming_msg, userdata)
-    # elif userdata:
-    #     manejar_usuario_inscrito(user_id, incoming_msg, userdata)
-    # elif estado == "menu_no_inscrito":
-    #     manejar_menu_no_inscrito(user_id, incoming_msg)
-    # elif estado == "validando_nombre":
-    #     manejar_validacion_nombre(user_id, incoming_msg)
-    # elif estado == "confirmando_nombre":
-    #     manejar_confirmacion_nombre(user_id, incoming_msg)
-    # elif estado == "validando_plan":
-    #     manejar_validacion_plan(user_id, incoming_msg)
-    # elif estado == "validando_inscripcion":
-    #     manejar_validacion_inscripcion(user_id, incoming_msg)
-    # elif estado == "confirmando_inscripcion":
-    #     manejar_confirmacion_inscripcion(user_id, incoming_msg, db)
-    # else:
-    #     send_whapi_message(user_id, "Lo siento, no entendí eso.")
+    if estado == "Inicio":
+        send_whapi_message(user_id, menu_bienvenida)
+        usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
+    elif estado == "inscrito":
+        telefono = usuarios_estado[user_id]["telefono"]
+        userdata = db.buscar_inscripcion(telefono)
+        manejar_usuario_inscrito(user_id, incoming_msg, userdata)
+    elif userdata:
+        manejar_usuario_inscrito(user_id, incoming_msg, userdata)
+    elif estado == "menu_no_inscrito":
+        manejar_menu_no_inscrito(user_id, incoming_msg)
+    elif estado == "validando_nombre":
+        manejar_validacion_nombre(user_id, incoming_msg)
+    elif estado == "confirmando_nombre":
+        manejar_confirmacion_nombre(user_id, incoming_msg)
+    elif estado == "validando_plan":
+        manejar_validacion_plan(user_id, incoming_msg)
+    elif estado == "validando_inscripcion":
+        manejar_validacion_inscripcion(user_id, incoming_msg)
+    elif estado == "confirmando_inscripcion":
+        manejar_confirmacion_inscripcion(user_id, incoming_msg, db)
+    else:
+        send_whapi_message(user_id, "Lo siento, no entendí eso.")
 
         
 
