@@ -157,15 +157,15 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
 
     send_whapi_message(user_id, "Test Funcion")
 
-    send_whapi_message(user_id, f"Estado actual: {usuarios_estado[user_id]['estado']}")
-
-
-
-    # telefono = usuarios_estado[user_id]["telefono"]
+    telefono = usuarios_estado[user_id]["telefono"]
     
-    # if manejar_comando_reiniciar(user_id, incoming_msg, db): return
-    # if manejar_preguntas_frecuentes(user_id, incoming_msg): return
-    # # if manejar_consulta(user_id, incoming_msg, userdata): return
+    if manejar_comando_reiniciar(user_id, incoming_msg, db): return
+    if manejar_preguntas_frecuentes(user_id, incoming_msg): return
+    
+    send_whapi_message(user_id, f"Telefono: {usuarios_estado[user_id]['telefono']}")
+    send_whapi_message(user_id, f"Estado actual: {usuarios_estado[user_id]['estado']}")
+    
+    # if manejar_consulta(user_id, incoming_msg, userdata): return
     
     # estado = usuarios_estado[user_id]["estado"]
     # print("Estado para depurar: ", estado)
