@@ -29,20 +29,13 @@ usuarios_estado = {}
 
 @app.route("/webhook", methods=['POST'])
 def whatsapp_webhook():
-    # data = request.json
-    # incoming_msg = data.get('message', {}).get('body', '').strip()
-    # user_id = data.get('from', '').strip()
+    incoming_msg = data.get('message', {}).get('body', '').strip()
+    user_id = data.get('from', '').strip()
 
-    # status, response_text =  send_whapi_message(user_id, incoming_msg)
+    status, response_text =  send_whapi_message(user_id, incoming_msg)
 
-    # print(f"[Whapi] Estado: {status} | Respuesta: {response_text}")
+    print(f"[Whapi] Estado: {status} | Respuesta: {response_text}")
     
-    data = request.json
-    print("[Webhook recibido]", json.dumps(data, indent=2))
-
-    send_whapi_message(user_id, "Prueba de mensaje recibido")
-
-
     return "OK", 200
 
 
