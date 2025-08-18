@@ -26,13 +26,19 @@ usuarios_estado = {}
 
 @app.route("/webhook", methods=['POST'])
 def whatsapp_webhook():
-    incoming_msg = request.values.get('Body', '').strip()
-    user_id = request.values.get('From', '')
+    data = request.json
+    incoming_msg = data.get('message', {}).get('body', '').strip()
+    user_id = data.get('from', '').strip()
 
     global usuarios_estado
 
     if user_id not in usuarios_estado:
-        usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "activo": False}
+        usuarios_estado[user_id] = {
+            "estado": "Inicio",
+            "nombre": None,
+            "plan": None,
+            "activo": False
+        }
     
     usuarios_estado[user_id]["telefono"] = limpiar_telefono(user_id)
 
@@ -58,16 +64,11 @@ def whatsapp_webhook():
             msg = resp.message()
             msg.body(f"Mensaje: {incoming_msg}")
 
-
-
-
-
-
         # Opciones para gente ya inscrita y NO activa
         else:
-            msg = resp.message()
-            msg.body(bienvenido_no_activo)
+            mensaje = bienvenido_no_activo
             usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
+            send_whapi_message(user_id, mensaje)
 
     # Opciones para gente no inscrita
     elif userdata is None and usuarios_estado[user_id]["estado"] == "Inicio":
@@ -197,88 +198,7 @@ def whatsapp_webhook():
 
         # ----------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-    # # DEV USE
-    # if incoming_msg.lower() == "reiniciar":
-    #     usuarios_estado.pop(user_id, None)
-    #     msg = reiniciar_estado(user_id)
-    
-    # elif incoming_msg.lower() == "consulta":
-    #     test = db.buscar_inscripcion(usuarios_estado[user_id]["telefono"])
-    #     if test:
-    #         msg = resp.message()
-    #         msg.body(f"Nombre: {test['nombre']}, Plan: {test['plan']}, Inscrito: {test['activo']}")
-    #     else:
-    #         msg = resp.message()
-    #         msg.body("No se encontró información con este numero de telefono")
-
-    # #--------------------------
-
-    # elif usuarios_estado[user_id]["inscrito"]:
-    #     msg = resp.message()
-    #     msg.body("Bienvenido de nuevo al club!")
-    #     usuarios_estado[user_id]["estado"] = "inicio_inscrito"
-
-    # elif usuarios_estado[user_id]["inscrito"] is False:
-    #     if estado == "Inicio":
-    #         msg = resp.message()
-    #         msg.body(menu_bienvenida)
-    #         usuarios_estado[user_id]["estado"] = "esperando_en_menu"
-
-    #     elif estado == "esperando_en_menu":
-    #         mensaje, nuevo_estado = respuesta_menu_precio(incoming_msg)
-    #         msg = resp.message()
-    #         msg.body(mensaje)
-    #         usuarios_estado[user_id]["estado"] = nuevo_estado
-
-    #     elif estado == "menu_precios":
-    #         mensaje, nuevo_estado = respuesta_confirmacion(incoming_msg)
-    #         msg = resp.message()
-    #         msg.body(mensaje)
-    #         usuarios_estado[user_id]["estado"] = nuevo_estado
-
-    #     elif estado == "menu_inscripcion":
-    #         mensaje, nuevo_estado, num_plan = seleccion_plan(incoming_msg)
-    #         msg = resp.message()
-    #         msg.body(mensaje)
-    #         usuarios_estado[user_id]["estado"] = nuevo_estado
-    #         usuarios_estado[user_id]["plan"] = num_plan
-
-    #     elif estado == "confirmacion":
-    #         plan = usuarios_estado[user_id]["plan"]
-    #         telefono = usuarios_estado[user_id]["telefono"]
-    #         mensaje, nuevo_estado = confirmacion(incoming_msg, plan, telefono)
-    #         msg = resp.message()
-    #         msg.body(mensaje)
-
-    #         usuarios_estado[user_id]["nombre"] = incoming_msg
-    #         usuarios_estado[user_id]["estado"] = nuevo_estado
-
-    #     elif estado == "esperando_confirmacion":
-    #         mensaje, nuevo_estado = esperando_confirmacion(incoming_msg)
-    #         msg = resp.message()
-    #         msg.body(mensaje)
-    #         usuarios_estado[user_id]["estado"] = nuevo_estado
-
-    #         telefono = usuarios_estado[user_id]["telefono"]
-    #         nombre = usuarios_estado[user_id]["nombre"]
-    #         plan = usuarios_estado[user_id]["plan"]
-
-    #         db.guardar_inscripcion(telefono, nombre, plan, True)
-
-    # else:
-    #     msg = resp.message()
-    #     msg.body("Bienvenido de nuevo")
-    #     usuarios_estado[user_id]["estado"] = "Inicio"
-    #     msg2 = resp.message()
-    #     msg2.body(menu_bienvenida)
-
-    return Response(str(resp), mimetype="application/xml", status=200)
+    return "OK", 200
 
 
 if __name__ == "__main__":
