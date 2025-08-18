@@ -2,14 +2,7 @@ from functions.sqlLite import *
 
 from functions.data import *
 from functions.validations import *
-
-def reiniciar_estado(user_id):
-    resp = MessagingResponse()
-    msg = resp.message()
-    msg.body("Reiniciando Estado")
-    db.limpiar_base()
-
-    return msg
+from functions.whapi import *
 
 usuarios_estado = {}
 
@@ -125,3 +118,12 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
             usuarios_estado[user_id] = {"estado": "Inicio"}
             send_whapi_message(user_id, "Inscripción cancelada. ¿Cómo puedo ayudarte hoy?")
         return
+
+
+# def reiniciar_estado(user_id):
+#     resp = MessagingResponse()
+#     msg = resp.message()
+#     msg.body("Reiniciando Estado")
+#     db.limpiar_base()
+
+#     return msg

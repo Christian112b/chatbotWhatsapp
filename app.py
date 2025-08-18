@@ -3,7 +3,6 @@ import json
 from dotenv import load_dotenv
 from flask import Flask, request
 
-from functions.whapi import send_whapi_message
 from functions.handlers import *
 
 load_dotenv()
