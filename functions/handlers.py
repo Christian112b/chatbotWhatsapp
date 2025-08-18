@@ -155,9 +155,11 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
 
     inicializar_estado(user_id)
 
+
     # send_whapi_message(user_id, "Test Funcion")
 
     telefono = usuarios_estado[user_id]["telefono"]
+    userdata = db.buscar_inscripcion(telefono)
     
     if manejar_comando_reiniciar(user_id, incoming_msg, db): return
     if manejar_preguntas_frecuentes(user_id, incoming_msg): return
