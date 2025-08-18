@@ -15,7 +15,6 @@ def inicializar_estado(user_id):
             "nombre": None,
             "plan": None,
             "activo": False,
-            "inscrito": False,
             "telefono": limpiar_telefono(user_id)
         }
 
@@ -158,21 +157,22 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
 
     telefono = usuarios_estado[user_id]["telefono"]
     
-
-    # if manejar_comando_reiniciar(user_id, incoming_msg, db): return
-    # if manejar_consulta(user_id, incoming_msg, userdata): return
+    if manejar_comando_reiniciar(user_id, incoming_msg, db): return
     if manejar_preguntas_frecuentes(user_id, incoming_msg): return
+    # if manejar_consulta(user_id, incoming_msg, userdata): return
     
     estado = usuarios_estado[user_id]["estado"]
     print("Estado para depurar: ", estado)
 
-    if estado == "inscrito":
+
+
+    if estado == "Inicio":
+        send_whapi_message(user_id, menu_bienvenida)
+        usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
+    elif estado == "inscrito":
         telefono = usuarios_estado[user_id]["telefono"]
         userdata = db.buscar_inscripcion(telefono)
         manejar_usuario_inscrito(user_id, incoming_msg, userdata)
-    elif estado == "Inicio":
-        send_whapi_message(user_id, menu_bienvenida)
-        usuarios_estado[user_id]["estado"] = "menu_no_inscrito"
     elif userdata:
         manejar_usuario_inscrito(user_id, incoming_msg, userdata)
     elif estado == "menu_no_inscrito":
