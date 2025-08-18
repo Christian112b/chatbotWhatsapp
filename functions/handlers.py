@@ -25,7 +25,7 @@ def manejar_comando_reiniciar(user_id, incoming_msg, db):
     return False
 
 def manejar_consulta(user_id, incoming_msg, userdata):
-    if incoming_msg.lower() == "consulta" or usuarios_estado[user_id]["estado"] == "prueba":
+    if incoming_msg.lower() == "consulta":
         if userdata:
             mensaje = f"Nombre: {userdata['nombre']}, Plan: {userdata['plan']}, Inscrito: {userdata['duracion']}"
         else:
