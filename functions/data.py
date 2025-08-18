@@ -121,3 +121,4 @@ preguntas_frecuentes = {
     "¿cómo contacto al club?": "Puedes escribirnos por WhatsApp."
 }
 
+pregunta_keywords = ["faq", "preguntas", "frecuentes"]

@@ -107,24 +107,25 @@ def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
         usuarios_estado[user_id] = {"estado": "Inicio"}
         send_whapi_message(user_id, "Inscripción cancelada. ¿Cómo puedo ayudarte hoy?")
 
+
+def manejar_preguntas_frecuentes(user_id, incoming_msg):
+    if any(keyword in incoming_msg.lower() for keyword in pregunta_keywords()):
+        msg = incoming_msg.lower().strip()
+        respuesta = preguntas_frecuentes.get(msg)
+        if respuesta:
+            send_whapi_message(user_id, respuesta)
+            return True
+    return False
+
 def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
     msg = incoming_msg.lower()
 
     if msg == "plan":
-        send_whapi_message(user_id, f"📦 Tu plan actual es: {userdata['plan']}")
+        send_whapi_message(user_id, f"Tu plan actual es: {userdata['plan']}")
     elif msg == "ayuda":
-        send_whapi_message(user_id, "🛠 Opciones disponibles:\n- 'plan': ver tu plan\n- 'estado': ver tu estado\n- 'reinicio': reiniciar todo")
+        send_whapi_message(user_id, "Opciones disponibles:\n- 'plan': ver tu plan\n- 'estado': ver tu estado\n- 'reinicio': reiniciar todo")
     else:
-        send_whapi_message(user_id, "🤖 No entendí eso. Escribe 'ayuda' para ver opciones.")
-
-def manejar_preguntas_frecuentes(user_id, incoming_msg):
-    msg = incoming_msg.lower().strip()
-    respuesta = preguntas_frecuentes.get(msg)
-    if respuesta:
-        send_whapi_message(user_id, respuesta)
-        return True
-    return False
-
+        send_whapi_message(user_id, "No entendí eso. Escribe 'ayuda' para ver opciones.")
 
 def procesar_mensaje_whatsapp(user_id, incoming_msg):    
     db = dbClub()
@@ -137,11 +138,14 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     if manejar_consulta(user_id, incoming_msg, userdata): return
     if manejar_preguntas_frecuentes(user_id, incoming_msg): return
     
-
     estado = usuarios_estado[user_id]["estado"]
     print("Estado para depurar: ", estado)
 
-    if userdata:
+    if estado == "inscrito":
+        telefono = usuarios_estado[user_id]["telefono"]
+        userdata = db.buscar_inscripcion(telefono)
+        manejar_usuario_inscrito(user_id, incoming_msg, userdata)
+    elif userdata:
         manejar_usuario_inscrito(user_id, incoming_msg, userdata)
     elif estado == "Inicio":
         send_whapi_message(user_id, menu_bienvenida)
@@ -158,9 +162,6 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
         manejar_validacion_inscripcion(user_id, incoming_msg)
     elif estado == "confirmando_inscripcion":
         manejar_confirmacion_inscripcion(user_id, incoming_msg, db)
-    elif estado == "inscrito":
-        telefono = usuarios_estado[user_id]["telefono"]
-        userdata = db.buscar_inscripcion(telefono)
-        manejar_usuario_inscrito(user_id, incoming_msg, userdata)
+
         
 
