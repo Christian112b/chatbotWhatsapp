@@ -117,6 +117,14 @@ def manejar_usuario_inscrito(user_id, incoming_msg, userdata):
     else:
         send_whapi_message(user_id, "🤖 No entendí eso. Escribe 'ayuda' para ver opciones.")
 
+def manejar_preguntas_frecuentes(user_id, incoming_msg):
+    msg = incoming_msg.lower().strip()
+    respuesta = preguntas_frecuentes.get(msg)
+    if respuesta:
+        send_whapi_message(user_id, respuesta)
+        return True
+    return False
+
 
 def procesar_mensaje_whatsapp(user_id, incoming_msg):    
     db = dbClub()
@@ -125,29 +133,10 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
     telefono = usuarios_estado[user_id]["telefono"]
     userdata = db.buscar_inscripcion(telefono)
 
-    if incoming_msg.lower() == "reinicio":
-        usuarios_estado[user_id] = {
-            "estado": "Inicio",
-            "nombre": None,
-            "plan": None,
-            "activo": False,
-            "telefono": limpiar_telefono(user_id)
-        }
-        send_whapi_message(user_id, "Estado reiniciado.")
-        return  
-
-    if incoming_msg.lower() == "estado":
-        estado = usuarios_estado.get(user_id, {}).get("estado", "Sin estado")
-        nombre = usuarios_estado.get(user_id, {}).get("nombre", "No definido")
-        plan = usuarios_estado.get(user_id, {}).get("plan", "No definido")
-        activo = usuarios_estado.get(user_id, {}).get("activo", "No definido")
-
-        mensaje = f"📍 Estado actual:\n- Estado: {estado}\n- Nombre: {nombre}\n- Plan: {plan}\n- Activo: {activo}"
-        send_whapi_message(user_id, mensaje)
-        return  
-
     if manejar_comando_reiniciar(user_id, incoming_msg, db): return
     if manejar_consulta(user_id, incoming_msg, userdata): return
+    if manejar_preguntas_frecuentes(user_id, incoming_msg): return
+    
 
     estado = usuarios_estado[user_id]["estado"]
     print("Estado para depurar: ", estado)
@@ -173,4 +162,5 @@ def procesar_mensaje_whatsapp(user_id, incoming_msg):
         telefono = usuarios_estado[user_id]["telefono"]
         userdata = db.buscar_inscripcion(telefono)
         manejar_usuario_inscrito(user_id, incoming_msg, userdata)
+        
 

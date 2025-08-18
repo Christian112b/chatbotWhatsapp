@@ -107,3 +107,17 @@ agendar_keyword = [
 bienvenido_no_activo = (
     "Lo sentimos, no estás activo en el club. ¿Te gustaría reactivar tu membresía o saber más sobre nuestros planes?"
 )
+
+preguntas_frecuentes = {
+    "¿cuál es el horario?": "Nuestro horario es de lunes a viernes de 6am a 10pm, y sábados de 8am a 2pm.",
+    "¿dónde están ubicados?": "Estamos en Av. Principal #123, San Luis Potosí.",
+    "¿cuánto cuesta la inscripción?": "La inscripción cuesta $500 MXN.",
+    "¿qué planes tienen?": "Tenemos planes mensual, trimestral y anual. Escribe 'planes' para más detalles.",
+    "¿hay entrenadores disponibles?": "Sí, contamos con entrenadores certificados en todos los turnos.",
+    "¿puedo pagar en línea?": "Sí, aceptamos pagos por transferencia y tarjeta.",
+    "¿hay estacionamiento?": "Sí, contamos con estacionamiento gratuito para socios.",
+    "¿ofrecen clases grupales?": "Sí, tenemos clases de yoga, funcional y spinning.",
+    "¿hay promociones vigentes?": "Este mes tenemos 10% de descuento en el plan anual.",
+    "¿cómo contacto al club?": "Puedes escribirnos por WhatsApp."
+}
+
