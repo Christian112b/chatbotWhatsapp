@@ -107,12 +107,12 @@ def manejar_validacion_inscripcion(user_id, incoming_msg):
     total = calcular_total(plan, duracion)
 
     duracion_meses = ["1 mes", "3 meses", "6 meses", "9 meses", "12 meses"]
-    duracion = duracion_meses[int(duracion) - 1] if duracion.isdigit() and 1 <= int(duracion) <= 5 else "1 mes"
+    duracion_en_txt = duracion_meses[int(duracion) - 1] if duracion.isdigit() and 1 <= int(duracion) <= 5 else "1 mes"
 
     usuarios_estado[user_id]["duracion"] = duracion
     usuarios_estado[user_id]["total"] = total
     usuarios_estado[user_id]["estado"] = "confirmando_inscripcion"
-    send_whapi_message(user_id, f"Nombre: {usuarios_estado[user_id]['nombre']}\nPlan: {planes[int(plan) - 1]}\nDuración: {duracion}, Total: {total}")
+    send_whapi_message(user_id, f"Nombre: {usuarios_estado[user_id]['nombre']}\nPlan: {planes[int(plan) - 1]}\nDuración: {duracion_en_txt}, Total: {total}")
     send_whapi_message(user_id, "Por favor, confirma tu inscripción respondiendo 'sí' o 'no'.")
 
 def manejar_confirmacion_inscripcion(user_id, incoming_msg, db):
