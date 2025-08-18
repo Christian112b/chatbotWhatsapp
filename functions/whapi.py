@@ -22,7 +22,6 @@ def send_whapi_message(to, message):
     }
 
     response = requests.post(WHAPI_URL, json=payload, headers=HEADERS)
-    print(f"[Whapi] Estado: {response.status_code} | Respuesta: {response.text}")
     
     return response.status_code, response.text
 
