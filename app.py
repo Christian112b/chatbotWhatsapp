@@ -34,7 +34,6 @@ def whatsapp_webhook():
     if user_id not in usuarios_estado:
         usuarios_estado[user_id] = {"estado": "Inicio", "nombre": None, "plan": None, "activo": False}
     
-    estado = usuarios_estado[user_id]["estado"]
     usuarios_estado[user_id]["telefono"] = limpiar_telefono(user_id)
 
     resp = MessagingResponse()
@@ -47,10 +46,19 @@ def whatsapp_webhook():
     if userdata is not None:
         usuarios_estado[user_id]["nombre"] = userdata["nombre"]
         usuarios_estado[user_id]["plan"] = userdata["plan"]
-        # usuarios_estado[user_id]["activo"] = userdata["activo"]
+        
+        usuarios_estado[user_id]["fecha_caducidad_pago"] = userdata["fecha_caducidad_pago"]
+
+        # Verificar si la fecha de caducidad del pago es menor o igual a la fecha actual
+        # Si es así, el usuario está activo
+        # Si no, el usuario no está activo
+        if usuarios_estado[user_id]["fecha_caducidad_pago"] <= datetime.now().date():
+            usuarios_estado[user_id]["activo"] = 1
+        else:
+            usuarios_estado[user_id]["activo"] = 0
 
         # Opciones para gente ya inscrita y activa
-        if usuarios_estado[user_id]["activo"] == 1 and usuarios_estado[user_id]["estado"] != "menu_inscrito":
+        if usuarios_estado[user_id]["activo"] == 1 and usuarios_estado[user_id]["estado"] == "Inicio":
             msg = resp.message()
             msg.body(bienvenido_activo) # Bienvenido a usuario activo
             usuarios_estado[user_id]["estado"] = "menu_inscrito"
