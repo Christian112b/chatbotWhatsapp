@@ -53,7 +53,7 @@ def whatsapp_webhook():
     print(f"[Webhook recibido] Mensaje: {incoming_msg} | De: {user_id}")
     status, response_text = send_whapi_message(user_id, f"Recibido: {incoming_msg}")
     print(f"[Whapi] Estado: {status} | Respuesta: {response_text}")
-    return "OK", 
+    return "OK", 200
 
 
 
