@@ -33,6 +33,8 @@ def whatsapp_webhook():
 
     send_whapi_message(user_id, incoming_msg)
     
+    return "OK", 200
+
 
 
     # global usuarios_estado
